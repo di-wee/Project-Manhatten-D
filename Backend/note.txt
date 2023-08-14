@@ -1,0 +1,2 @@
+npm i express dotenv cors helmet express-rate-limit mongoose express-validator 
+jsonwebtoken uuid
