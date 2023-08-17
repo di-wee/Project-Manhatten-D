@@ -1,25 +1,54 @@
-import React from "react";
-import HomePage from "./components/ShoppingPages/HomePage";
+import React from 'react';
+import '@fontsource/roboto-condensed';
+import Main from './pages/Main';
+import { Route, Routes } from 'react-router';
+import { ThemeProvider, createTheme } from '@mui/material';
+import NavBar from './components/NavBar';
+import ShoppingCart from './components/CheckoutPages/ShoppingCart';
+import Clothing from './components/ShoppingPages/Clothing';
+import Bags from './components/ShoppingPages/Bags';
+import Shoes from './components/ShoppingPages/Shoes';
+
+const theme = createTheme({
+	typography: {
+		fontFamily: 'Roboto Condensed',
+	},
+});
 
 function App() {
-  return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-md-4">
-            <img
-              src="https://www.google.com/imgres?imgurl=https%3A%2F%2F1000logos.net%2Fwp-content%2Fuploads%2F2021%2F05%2FOff-White-logo.png&tbnid=K6_7bZLXARBCBM&vet=12ahUKEwi01OyUyuKAAxWhz6ACHR56AZsQMygBegQIARB3..i&imgrefurl=https%3A%2F%2F1000logos.net%2Foff-white-logo%2F&docid=ddBDAE9AcYwJHM&w=3840&h=2160&q=off%20white%20logo&ved=2ahUKEwi01OyUyuKAAxWhz6ACHR56AZsQMygBegQIARB3"
-              width="300px"
-              className="logo"
-            ></img>
-          </div>
-          <div className="col-md-4"></div>
-        </div>
-        <HomePage></HomePage>
-      </div>
-    </>
-  );
+	return (
+		<>
+			<ThemeProvider theme={theme}>
+				<header>
+					<NavBar></NavBar>
+				</header>
+				<main>
+					<Routes>
+						<Route
+							path='/'
+							element={<Main />}
+						/>
+						<Route
+							path='/clothing'
+							element={<Clothing />}
+						/>
+						<Route
+							path='/bags'
+							element={<Bags />}
+						/>
+						<Route
+							path='/shoes'
+							element={<Shoes />}
+						/>
+						<Route
+							path='/shopping-cart'
+							element={<ShoppingCart />}
+						/>
+					</Routes>
+				</main>
+			</ThemeProvider>
+		</>
+	);
 }
 
 export default App;
