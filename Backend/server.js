@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit'); //ensure DDOS
 const connectDB = require('./src/db/db');
+const payment = require('./src/routers/payment');
 connectDB();
 const limit = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15min >> within milliseconds
@@ -12,6 +13,7 @@ const limit = rateLimit({
 	standardHeaders: true,
 	legacyHeaders: false,
 });
+co;
 
 const app = express();
 app.use(cors()); //anyone anywhere able to access api
@@ -20,7 +22,9 @@ app.use(limit); // prevent DDOS
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 5001;
+app.use('/api', payment); // router for payment
+
+const PORT = process.env.PORT || 1945;
 app.listen(PORT, () => {
 	console.log(`server started on port ${PORT}`);
 });
