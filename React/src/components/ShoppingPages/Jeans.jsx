@@ -1,10 +1,13 @@
 import React from 'react';
+import JeansItems from './JeansItems';
+
+//get and map/prop jeans into JeansItems below
 
 const Jeans = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <JeansItems></JeansItems>
+        </>
     );
 };
 
