@@ -1,10 +1,11 @@
 import React from "react";
+import HomePage from "./components/ShoppingPages/HomePage";
 
 function App() {
   return (
-    <div>
-      <h2>GA SEI</h2>
-    </div>
+    <>
+      <HomePage></HomePage>
+    </>
   );
 }
 
