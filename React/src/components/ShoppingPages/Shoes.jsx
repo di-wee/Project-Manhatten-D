@@ -1,10 +1,13 @@
 import React from 'react';
+import ShoesItems from './ShoesItems';
+
+//get and map/prop shoes into ShoesItems below
 
 const Shoes = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <ShoesItems></ShoesItems>
+        </>
     );
 };
 

@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
+import HoodiesItems from "./HoodiesItems";
+
+//get and map/prop hoodies into HoodiesItems below
 
 const Hoodies = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return (
+    <>
+      <Hoodies></Hoodies>
+    </>
+  );
 };
 
 export default Hoodies;
