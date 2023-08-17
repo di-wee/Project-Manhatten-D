@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/payment');
+router
+	.post('/payment/process', createNewPayment)
+	.post('/payment/callback', storePaymentCallback);
 
 module.exports = router;
