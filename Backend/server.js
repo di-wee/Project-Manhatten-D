@@ -13,7 +13,6 @@ const limit = rateLimit({
 	standardHeaders: true,
 	legacyHeaders: false,
 });
-co;
 
 const app = express();
 app.use(cors()); //anyone anywhere able to access api

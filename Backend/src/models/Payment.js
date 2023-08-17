@@ -21,7 +21,7 @@ const PaymentSchema = new mongoose.Schema({
 	paymentDetails: {
 		paymentMethod: {
 			type: String,
-			enum: ['CreditCard', 'PayPal', 'Other'],
+			enum: ['CreditCard'],
 			required: true,
 		},
 		cardNumber: {
@@ -41,6 +41,7 @@ const PaymentSchema = new mongoose.Schema({
 	gatewayResponse: {
 		type: Object,
 	},
+
 	timestamp: {
 		type: Date,
 		default: Date.now,
