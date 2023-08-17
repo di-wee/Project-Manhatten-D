@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit'); //ensure DDOS
 const connectDB = require('./src/db/db');
 const payment = require('./src/routers/payment');
-const category = require('./src/routers/category');
+
 connectDB();
 const limit = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15min >> within milliseconds
@@ -23,7 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', payment); // router for payment
-app.use('/api', category);
 
 const PORT = process.env.PORT || 1945;
 app.listen(PORT, () => {
