@@ -8,8 +8,6 @@ const connectDB = require('./src/db/db');
 const payment = require('./src/routers/payment');
 const cart = require('./src/routers/cart');
 const productRoutes = require('./src/routers/products');
-const categoryRoutes = require('./src/routers/category');
-const subcategory = require('./src/routers/subcategory');
 const address = require('./src/routers/address');
 const userDetails = require('./src/routers/userDetails');
 
@@ -30,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', payment);
 app.use('/api', cart);
-app.use('/api', productRoutes, categoryRoutes, subcategory);
+app.use('/api', productRoutes);
 app.use('/api', address, userDetails);
 
 const PORT = process.env.PORT || 1945;
