@@ -38,13 +38,19 @@ const Accessories = (props) => {
 
 	return (
 		<div>
-			<h1>testing</h1>
-			<Button
-				variant='contained'
-				onClick={() => console.log(accessories)}>
-				Click Me
-			</Button>
-			<AccessoriesItem></AccessoriesItem>
+			{accessories.map((item) => {
+				return (
+					<AccessoriesItem
+						key={item._id}
+						id={item._id}
+						name={item.name}
+						description={item.description}
+						price={item.price}
+						image={item.image}
+						category={item.category}
+						subcategory={item.subcategory}></AccessoriesItem>
+				);
+			})}
 		</div>
 	);
 };

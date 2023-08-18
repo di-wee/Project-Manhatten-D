@@ -32,8 +32,8 @@ const Shoes = (props) => {
 			{shoes.map((item) => {
 				return (
 					<ShoesItems
-						key={item.name}
-						id={item.id}
+						key={item._id}
+						id={item._id}
 						name={item.name}
 						description={item.description}
 						price={item.price}
