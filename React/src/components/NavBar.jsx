@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart } from '@mui/icons-material';
 
 const NavBar = () => {
+	//managing states
 	const [menMenuAnchorEl, setMenMenuAnchorEl] = useState(null);
 	const [womenMenuAnchorEl, setWomenMenuAnchorEl] = useState(null);
 
@@ -74,6 +75,7 @@ const NavBar = () => {
 					margin: '1rem',
 					marginLeft: '-6rem',
 				}}>
+				{/* HEADER NAVBAR FOR MEN AND WOMEN	 */}
 				<Breadcrumbs>
 					<Button
 						aria-controls='men-menu'
@@ -86,7 +88,7 @@ const NavBar = () => {
 				<Menu
 					id='men-menu'
 					anchorEl={menMenuAnchorEl}
-					open={Boolean(menMenuAnchorEl)} // if its true; there's an element present
+					open={Boolean(menMenuAnchorEl)} // if its true; there's an element present .ie its clicked and it'll open menu
 					onClose={handleMenuClose}>
 					<Paper
 						sx={{

@@ -3,8 +3,14 @@ const Product = require('../models/Products');
 // Get all products
 const getAllProducts = async (req, res) => {
 	try {
-		// Fetch all products from the database
-		const products = await Product.find({});
+		const { category, subcategory } = req.query;
+		const filter = {};
+
+		if (category) filter.category = category;
+		if (subcategory) filter.subcategory = subcategory;
+
+		// fetch products from the database based on the filter
+		const products = await Product.find(filter);
 		// Respond with a 200 status code and the list of products
 		res.status(200).json(products);
 	} catch (error) {

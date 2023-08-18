@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '@fontsource/roboto-condensed';
 import Main from './pages/Main';
 import { Route, Routes } from 'react-router';
@@ -17,6 +17,7 @@ import WomenShoes from './pages/WomenShoes';
 import WomenBags from './pages/WomenBags';
 import WomenAccessories from './pages/WomenAccessories';
 import FAQ from './pages/FAQ';
+import ShoppingContext from './context/ShoppingContext';
 
 const theme = createTheme({
 	palette: {
@@ -30,68 +31,72 @@ const theme = createTheme({
 });
 
 function App() {
+	//state management for useContext
+	const [accessories, setAccessories] = useState([]);
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<header>
-					<NavBar></NavBar>
-				</header>
-				<main>
-					<Routes>
-						<Route
-							path='/'
-							element={<Main />}
-						/>
-						<Route
-							path='/faqs'
-							element={<FAQ></FAQ>}
-						/>
-						<Route
-							path='/men/tops'
-							element={<MenTops></MenTops>}
-						/>
-						<Route
-							path='/men/bottoms'
-							element={<MenBottoms></MenBottoms>}
-						/>
-						<Route
-							path='/men/shoes'
-							element={<MenShoes></MenShoes>}
-						/>
-						<Route
-							path='/men/bags'
-							element={<MenBags></MenBags>}
-						/>
-						<Route
-							path='/men/accessories'
-							element={<MenAccessories></MenAccessories>}
-						/>
-						<Route
-							path='/women/tops'
-							element={<WomenTops></WomenTops>}
-						/>
-						<Route
-							path='/women/bottoms'
-							element={<WomenBottoms></WomenBottoms>}
-						/>
-						<Route
-							path='/women/shoes'
-							element={<WomenShoes></WomenShoes>}
-						/>
-						<Route
-							path='/women/bags'
-							element={<WomenBags></WomenBags>}
-						/>
-						<Route
-							path='/women/accessories'
-							element={<WomenAccessories></WomenAccessories>}
-						/>
-						<Route
-							path='/shopping-cart'
-							element={<ShoppingCart />}
-						/>
-					</Routes>
-				</main>
+				<ShoppingContext.Provider value={{ accessories, setAccessories }}>
+					<header>
+						<NavBar></NavBar>
+					</header>
+					<main>
+						<Routes>
+							<Route
+								path='/'
+								element={<Main />}
+							/>
+							<Route
+								path='/faqs'
+								element={<FAQ></FAQ>}
+							/>
+							<Route
+								path='/men/tops'
+								element={<MenTops></MenTops>}
+							/>
+							<Route
+								path='/men/bottoms'
+								element={<MenBottoms></MenBottoms>}
+							/>
+							<Route
+								path='/men/shoes'
+								element={<MenShoes></MenShoes>}
+							/>
+							<Route
+								path='/men/bags'
+								element={<MenBags></MenBags>}
+							/>
+							<Route
+								path='/men/accessories'
+								element={<MenAccessories></MenAccessories>}
+							/>
+							<Route
+								path='/women/tops'
+								element={<WomenTops></WomenTops>}
+							/>
+							<Route
+								path='/women/bottoms'
+								element={<WomenBottoms></WomenBottoms>}
+							/>
+							<Route
+								path='/women/shoes'
+								element={<WomenShoes></WomenShoes>}
+							/>
+							<Route
+								path='/women/bags'
+								element={<WomenBags></WomenBags>}
+							/>
+							<Route
+								path='/women/accessories'
+								element={<WomenAccessories></WomenAccessories>}
+							/>
+							<Route
+								path='/shopping-cart'
+								element={<ShoppingCart />}
+							/>
+						</Routes>
+					</main>
+				</ShoppingContext.Provider>
 			</ThemeProvider>
 		</>
 	);
