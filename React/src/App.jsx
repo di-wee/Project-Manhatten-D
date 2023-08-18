@@ -8,8 +8,14 @@ import ShoppingCart from './components/CheckoutPages/ShoppingCart';
 import Clothing from './components/ShoppingPages/Clothing';
 import Bags from './components/ShoppingPages/Bags';
 import Shoes from './components/ShoppingPages/Shoes';
+import { grey } from '@mui/material/colors';
 
 const theme = createTheme({
+	palette: {
+		primary: {
+			main: grey[50],
+		},
+	},
 	typography: {
 		fontFamily: 'Roboto Condensed',
 	},

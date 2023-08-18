@@ -13,7 +13,15 @@ const NavBar = () => {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
-				<Toolbar sx={{ justifyContent: 'space-between' }}>
+				<Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+					<Typography component='div'>
+						<Link
+							to='faq'
+							style={{ textDecoration: 'none', color: 'inherit' }}>
+							FAQ
+						</Link>
+					</Typography>
+
 					<Typography
 						variant='h6'
 						component='div'>
@@ -23,29 +31,9 @@ const NavBar = () => {
 							MANHATTAN D
 						</Link>
 					</Typography>
-					<Button color='inherit'>
-						<Link
-							to='clothing'
-							style={{ textDecoration: 'none', color: 'inherit' }}>
-							CLOTHING
-						</Link>
-					</Button>
-					<Button color='inherit'>
-						<Link
-							to='bags'
-							style={{ textDecoration: 'none', color: 'inherit' }}>
-							BAGS
-						</Link>
-					</Button>
-					<Button color='inherit'>
-						<Link
-							to='shoes'
-							style={{ textDecoration: 'none', color: 'inherit' }}>
-							SHOES
-						</Link>
-					</Button>
+
 					<Typography
-						variant='h6'
+						variant='h8'
 						component='div'>
 						<Link
 							to='shopping-cart'
