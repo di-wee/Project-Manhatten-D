@@ -16,6 +16,7 @@ import WomenBottoms from './pages/WomenBottoms';
 import WomenShoes from './pages/WomenShoes';
 import WomenBags from './pages/WomenBags';
 import WomenAccessories from './pages/WomenAccessories';
+import FAQ from './pages/FAQ';
 
 const theme = createTheme({
 	palette: {
@@ -42,43 +43,47 @@ function App() {
 							element={<Main />}
 						/>
 						<Route
-							path='/men-tops'
+							path='/faqs'
+							element={<FAQ></FAQ>}
+						/>
+						<Route
+							path='/men/tops'
 							element={<MenTops></MenTops>}
 						/>
 						<Route
-							path='/men-bottoms'
+							path='/men/bottoms'
 							element={<MenBottoms></MenBottoms>}
 						/>
 						<Route
-							path='/men-shoes'
+							path='/men/shoes'
 							element={<MenShoes></MenShoes>}
 						/>
 						<Route
-							path='/men-bags'
+							path='/men/bags'
 							element={<MenBags></MenBags>}
 						/>
 						<Route
-							path='/men-accessories'
+							path='/men/accessories'
 							element={<MenAccessories></MenAccessories>}
 						/>
 						<Route
-							path='/women-tops'
+							path='/women/tops'
 							element={<WomenTops></WomenTops>}
 						/>
 						<Route
-							path='/women-bottoms'
+							path='/women/bottoms'
 							element={<WomenBottoms></WomenBottoms>}
 						/>
 						<Route
-							path='/women-shoes'
+							path='/women/shoes'
 							element={<WomenShoes></WomenShoes>}
 						/>
 						<Route
-							path='/women-bags'
+							path='/women/bags'
 							element={<WomenBags></WomenBags>}
 						/>
 						<Route
-							path='/women-accessories'
+							path='/women/accessories'
 							element={<WomenAccessories></WomenAccessories>}
 						/>
 						<Route

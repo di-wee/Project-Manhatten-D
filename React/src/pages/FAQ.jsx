@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 
-const MenTops = () => {
+const FAQ = () => {
 	return (
 		<div>
-			<Typography>Men tops Go here</Typography>
+			<Typography>FAQs:</Typography>
 		</div>
 	);
 };
 
-export default MenTops;
+export default FAQ;

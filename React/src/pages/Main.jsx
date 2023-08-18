@@ -10,7 +10,6 @@ const Main = () => {
 					<div className='col-md-4'></div>
 					<div className='col-md-4'></div>
 				</div>
-				<HomePage></HomePage>
 			</div>
 		</div>
 	);

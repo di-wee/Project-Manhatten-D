@@ -14,24 +14,30 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart } from '@mui/icons-material';
 
 const NavBar = () => {
-	const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+	const [menMenuAnchorEl, setMenMenuAnchorEl] = useState(null);
+	const [womenMenuAnchorEl, setWomenMenuAnchorEl] = useState(null);
 
 	//element that will trigger the opening of menu
-	const handleMenuOpen = (event) => {
-		setMenuAnchorEl(event.currentTarget);
+	const handleMenMenuOpen = (event) => {
+		setMenMenuAnchorEl(event.currentTarget);
 	};
 
+	const handleWomenMenuOpen = (event) => {
+		setWomenMenuAnchorEl(event.currentTarget);
+	};
 	//element that will trigger the closing of menu
 	const handleMenuClose = () => {
-		setMenuAnchorEl(null);
+		setMenMenuAnchorEl(null);
+		setWomenMenuAnchorEl(null);
 	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
 				<Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
 					<Typography component='div'>
 						<Link
-							to='faq'
+							to='faqs'
 							style={{ textDecoration: 'none', color: 'inherit' }}>
 							FAQ
 						</Link>
@@ -72,15 +78,15 @@ const NavBar = () => {
 					<Button
 						aria-controls='men-menu'
 						aria-haspopup='true'
-						onClick={handleMenuOpen}
+						onClick={handleMenMenuOpen}
 						sx={{ color: 'gray' }}>
 						MEN
 					</Button>
 				</Breadcrumbs>
 				<Menu
 					id='men-menu'
-					anchorEl={menuAnchorEl}
-					open={Boolean(menuAnchorEl)}
+					anchorEl={menMenuAnchorEl}
+					open={Boolean(menMenuAnchorEl)} // if its true; there's an element present
 					onClose={handleMenuClose}>
 					<Paper
 						sx={{
@@ -129,15 +135,15 @@ const NavBar = () => {
 					<Button
 						aria-controls='women-menu'
 						aria-haspopup='true'
-						onClick={handleMenuOpen}
+						onClick={handleWomenMenuOpen}
 						sx={{ color: 'gray' }}>
 						WOMEN
 					</Button>
 				</Breadcrumbs>
 				<Menu
-					id='men-menu'
-					anchorEl={menuAnchorEl}
-					open={Boolean(menuAnchorEl)}
+					id='women-menu'
+					anchorEl={womenMenuAnchorEl}
+					open={Boolean(womenMenuAnchorEl)}
 					onClose={handleMenuClose}>
 					<Paper
 						sx={{
