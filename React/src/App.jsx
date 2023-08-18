@@ -5,10 +5,17 @@ import { Route, Routes } from 'react-router';
 import { ThemeProvider, createTheme } from '@mui/material';
 import NavBar from './components/NavBar';
 import ShoppingCart from './components/CheckoutPages/ShoppingCart';
-import Clothing from './components/ShoppingPages/Clothing';
-import Bags from './components/ShoppingPages/Bags';
-import Shoes from './components/ShoppingPages/Shoes';
 import { grey } from '@mui/material/colors';
+import MenTops from './pages/MenTops';
+import MenBottoms from './pages/MenBottoms';
+import MenShoes from './pages/MenShoes';
+import MenBags from './pages/MenBags';
+import MenAccessories from './pages/MenAccessories';
+import WomenTops from './pages/WomenTops';
+import WomenBottoms from './pages/WomenBottoms';
+import WomenShoes from './pages/WomenShoes';
+import WomenBags from './pages/WomenBags';
+import WomenAccessories from './pages/WomenAccessories';
 
 const theme = createTheme({
 	palette: {
@@ -35,16 +42,44 @@ function App() {
 							element={<Main />}
 						/>
 						<Route
-							path='/clothing'
-							element={<Clothing />}
+							path='/men-tops'
+							element={<MenTops></MenTops>}
 						/>
 						<Route
-							path='/bags'
-							element={<Bags />}
+							path='/men-bottoms'
+							element={<MenBottoms></MenBottoms>}
 						/>
 						<Route
-							path='/shoes'
-							element={<Shoes />}
+							path='/men-shoes'
+							element={<MenShoes></MenShoes>}
+						/>
+						<Route
+							path='/men-bags'
+							element={<MenBags></MenBags>}
+						/>
+						<Route
+							path='/men-accessories'
+							element={<MenAccessories></MenAccessories>}
+						/>
+						<Route
+							path='/women-tops'
+							element={<WomenTops></WomenTops>}
+						/>
+						<Route
+							path='/women-bottoms'
+							element={<WomenBottoms></WomenBottoms>}
+						/>
+						<Route
+							path='/women-shoes'
+							element={<WomenShoes></WomenShoes>}
+						/>
+						<Route
+							path='/women-bags'
+							element={<WomenBags></WomenBags>}
+						/>
+						<Route
+							path='/women-accessories'
+							element={<WomenAccessories></WomenAccessories>}
 						/>
 						<Route
 							path='/shopping-cart'
