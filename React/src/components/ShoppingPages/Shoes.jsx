@@ -1,38 +1,47 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ShoesItems from './ShoesItems';
+import ShoppingContext from '../../context/ShoppingContext';
 
 //get and map/prop shoes into ShoesItems below
 
-const Shoes = () => {
-	const [products, setProducts] = useState([]);
-	const [filteredProducts, setFilteredProducts] = useState([]);
+const Shoes = (props) => {
+	const { category, subcategory } = props;
+	const shoppingCtx = useContext(ShoppingContext);
+	const { shoes, setShoes } = shoppingCtx;
 
-	const getProducts = async () => {
-		const res = await fetch(import.meta.env.VITE_SERVER + '/api/product');
+	const getProducts = async (category, subcategory) => {
+		let url = import.meta.env.VITE_SERVER + '/api/product';
+		if (category) {
+			url += `?category=${category}`; //adding filtering query for filter if category is present
+		}
+		if (subcategory) {
+			url += subcategory ? `&subcategory=${subcategory}` : ''; //if subcategory is present to add query filter else blank
+		}
+		const res = await fetch(url);
 		const data = await res.json();
-		setProducts(data);
-		console.log(data);
-	};
-
-	const filterProducts = (category, subcategory) => {
-		const filter = products.filter(
-			(item) => item.category === category && item.subcategory === subcategory
-		);
-		setFilteredProducts(filter);
+		setShoes(data);
 	};
 
 	useEffect(() => {
-		getProducts();
-		console.log(products);
-	}, []);
-
-	useEffect(() => {
-		filterProducts('Men', 'Shoes');
-	}, [products]);
+		getProducts(category, subcategory);
+		console.log(shoes);
+	}, [category, subcategory]);
 
 	return (
 		<>
-			<ShoesItems></ShoesItems>
+			{shoes.map((item) => {
+				return (
+					<ShoesItems
+						key={item.name}
+						id={item.id}
+						name={item.name}
+						description={item.description}
+						price={item.price}
+						image={item.image}
+						category={item.category}
+						subcategory={item.subcategory}></ShoesItems>
+				);
+			})}
 		</>
 	);
 };
