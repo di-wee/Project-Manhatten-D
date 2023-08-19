@@ -32,13 +32,13 @@ const theme = createTheme({
 
 function App() {
 	//state management for useContext
-	const [accessories, setAccessories] = useState([]);
-	const [shoes, setShoes] = useState([]);
+	// const [accessories, setAccessories] = useState([]);
+	// const [shoes, setShoes] = useState([]);
+	const [product, setProduct] = useState([]);
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<ShoppingContext.Provider
-					value={{ accessories, setAccessories, shoes, setShoes }}>
+				<ShoppingContext.Provider value={{ product, setProduct }}>
 					<header>
 						<NavBar></NavBar>
 					</header>

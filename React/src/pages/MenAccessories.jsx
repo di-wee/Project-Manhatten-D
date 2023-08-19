@@ -1,12 +1,12 @@
 import React from 'react';
-import Accessories from '../components/ShoppingPages/Accessories';
+import Product from '../components/ShoppingPages/Product';
 
 const MenAccessories = () => {
 	return (
 		<div>
-			<Accessories
+			<Product
 				category='Men'
-				subcategory='Accessories'></Accessories>
+				subcategory='Accessories'></Product>
 		</div>
 	);
 };

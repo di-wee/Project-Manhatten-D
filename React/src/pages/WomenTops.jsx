@@ -1,10 +1,12 @@
-import { Typography } from '@mui/material';
 import React from 'react';
+import Product from '../components/ShoppingPages/Product';
 
 const WomenTops = () => {
 	return (
 		<div>
-			<Typography>Women tops go here</Typography>
+			<Product
+				category='Women'
+				subcategory='Tops'></Product>
 		</div>
 	);
 };

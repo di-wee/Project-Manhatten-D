@@ -1,8 +1,8 @@
-import React from 'react';
-import AccessoriesModal from './AccessoriesModal';
 import { Typography } from '@mui/material';
+import React from 'react';
+import ProductModal from './ProductModal';
 
-const AccessoriesItem = (props) => {
+const ProductItem = (props) => {
 	const { image, name, description, price, category, subcategory } = props;
 	return (
 		<div>
@@ -14,9 +14,9 @@ const AccessoriesItem = (props) => {
 			<Typography>{price}</Typography>
 			<Typography>{category}</Typography>
 			<Typography>{subcategory}</Typography>
-			<AccessoriesModal></AccessoriesModal>
+			<ProductModal></ProductModal>
 		</div>
 	);
 };
 
-export default AccessoriesItem;
+export default ProductItem;

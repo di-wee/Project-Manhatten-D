@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import AccessoriesItem from './AccessoriesItem';
 import ShoppingContext from '../../context/ShoppingContext';
-import { Button } from '@mui/material';
+import ProductItem from './ProductItem';
 
-const Accessories = (props) => {
+const Product = (props) => {
 	const { category, subcategory } = props;
 	const shoppingCtx = useContext(ShoppingContext);
-	const { accessories, setAccessories } = shoppingCtx;
+	const { product, setProduct } = shoppingCtx;
 
 	const getProducts = async (category, subcategory) => {
 		try {
@@ -21,7 +20,7 @@ const Accessories = (props) => {
 			const res = await fetch(url);
 			const data = await res.json();
 
-			setAccessories(data);
+			setProduct(data);
 
 			if (!res.ok) {
 				alert('error fetching data!');
@@ -38,9 +37,9 @@ const Accessories = (props) => {
 
 	return (
 		<div>
-			{accessories.map((item) => {
+			{product.map((item) => {
 				return (
-					<AccessoriesItem
+					<ProductItem
 						key={item._id}
 						id={item._id}
 						name={item.name}
@@ -48,11 +47,11 @@ const Accessories = (props) => {
 						price={item.price}
 						image={item.image}
 						category={item.category}
-						subcategory={item.subcategory}></AccessoriesItem>
+						subcategory={item.subcategory}></ProductItem>
 				);
 			})}
 		</div>
 	);
 };
 
-export default Accessories;
+export default Product;
