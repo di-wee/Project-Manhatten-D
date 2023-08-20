@@ -13,11 +13,15 @@ const ProductItem = (props) => {
 	const [showModal, setShowModal] = useState(false);
 	return (
 		<div>
-			<Card sx={{ maxWidth: 345 }}>
+			<Card
+				sx={{
+					width: 400,
+					margin: '2rem',
+				}}>
 				<CardActionArea>
 					<CardMedia
 						component='img'
-						height='140'
+						height='380'
 						image={`/${image[0]}`}
 					/>
 					<CardContent>
@@ -35,6 +39,7 @@ const ProductItem = (props) => {
 					</CardContent>
 				</CardActionArea>
 			</Card>
+
 			<ProductModal></ProductModal>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ShoppingContext from '../../context/ShoppingContext';
 import ProductItem from './ProductItem';
+import { Grid } from '@mui/material';
 
 const Product = (props) => {
 	const { category, subcategory } = props; //category and subcategory propped down from pages
@@ -38,19 +39,32 @@ const Product = (props) => {
 
 	return (
 		<div>
-			{product.map((item) => {
-				return (
-					<ProductItem
-						key={item._id}
-						id={item._id}
-						name={item.name}
-						description={item.description}
-						price={item.price}
-						image={item.image}
-						category={item.category}
-						subcategory={item.subcategory}></ProductItem>
-				);
-			})}
+			<Grid
+				container
+				spacing={4}>
+				{product.map((item) => {
+					return (
+						<Grid
+							item
+							xs={12}
+							sm={6}
+							md={4}
+							lg={3}
+							sx={{ margin: '2rem' }}
+							key={item._id}>
+							<ProductItem
+								key={item._id}
+								id={item._id}
+								name={item.name}
+								description={item.description}
+								price={item.price}
+								image={item.image}
+								category={item.category}
+								subcategory={item.subcategory}></ProductItem>
+						</Grid>
+					);
+				})}
+			</Grid>
 		</div>
 	);
 };
