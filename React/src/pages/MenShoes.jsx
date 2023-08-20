@@ -1,5 +1,4 @@
 import React from 'react';
-import Shoes from '../components/ShoppingPages/Shoes';
 import Product from '../components/ShoppingPages/Product';
 
 const MenShoes = () => {

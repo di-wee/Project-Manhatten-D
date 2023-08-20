@@ -1,5 +1,4 @@
 import React from 'react';
-import HomePage from '../components/ShoppingPages/HomePage';
 
 const Main = () => {
 	return (
