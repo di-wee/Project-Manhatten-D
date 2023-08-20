@@ -3,7 +3,8 @@ import ShoppingContext from '../../context/ShoppingContext';
 import ProductItem from './ProductItem';
 
 const Product = (props) => {
-	const { category, subcategory } = props;
+	const { category, subcategory } = props; //category and subcategory propped down from pages
+	//state management
 	const shoppingCtx = useContext(ShoppingContext);
 	const { product, setProduct } = shoppingCtx;
 
@@ -12,10 +13,10 @@ const Product = (props) => {
 			let url = import.meta.env.VITE_SERVER + '/api/product';
 
 			if (category) {
-				url += `?category=${category}`;
+				url += `?category=${category}`; // if category exist, will add on to query paramater
 			}
 			if (subcategory) {
-				url += subcategory ? `&subcategory=${subcategory}` : '';
+				url += subcategory ? `&subcategory=${subcategory}` : ''; // if subcategroy is present will add on subcategory or else  it'll be blank
 			}
 			const res = await fetch(url);
 			const data = await res.json();
