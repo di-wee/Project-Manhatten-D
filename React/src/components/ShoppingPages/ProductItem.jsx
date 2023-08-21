@@ -4,6 +4,7 @@ import {
 	CardContent,
 	CardMedia,
 	Typography,
+	Button,
 } from '@mui/material';
 import React, { useState } from 'react';
 import ProductModal from './ProductModal';
@@ -11,8 +12,9 @@ import ProductModal from './ProductModal';
 const ProductItem = (props) => {
 	const { image, name, description, price, category, subcategory } = props;
 	const [showModal, setShowModal] = useState(false);
+
 	return (
-		<div>
+		<>
 			<Card
 				sx={{
 					width: 300,
@@ -35,12 +37,37 @@ const ProductItem = (props) => {
 							color='text.secondary'>
 							{price}
 						</Typography>
+						<Button
+							onClick={() => setShowModal(true)}
+							variant='outlined'
+							sx={{
+								width: '10px',
+								color: 'black',
+								backgroundColor: 'white',
+								borderColor: 'black',
+								justifyItems: 'center',
+								margin: '10px auto',
+							}}>
+							Details
+						</Button>
 					</CardContent>
 				</CardActionArea>
 			</Card>
 
-			<ProductModal></ProductModal>
-		</div>
+			{showModal && (
+				<ProductModal
+					image1={image[0]}
+					image2={image[1]}
+					image3={image[2]}
+					image4={image[3]}
+					name={name}
+					description={description}
+					price={price}
+					category={category}
+					subcategory={subcategory}
+					setShowModal={setShowModal}></ProductModal>
+			)}
+		</>
 	);
 };
 
