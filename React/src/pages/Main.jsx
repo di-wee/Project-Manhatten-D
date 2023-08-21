@@ -1,5 +1,4 @@
 import React from 'react';
-import HomePage from '../components/ShoppingPages/HomePage';
 
 const Main = () => {
 	return (
@@ -10,7 +9,6 @@ const Main = () => {
 					<div className='col-md-4'></div>
 					<div className='col-md-4'></div>
 				</div>
-				<HomePage></HomePage>
 			</div>
 		</div>
 	);
