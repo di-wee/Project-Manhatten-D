@@ -17,22 +17,31 @@ const ShoppingCart = (props) => {
 	};
 	return (
 		<>
-			<Typography sx={{}}>Your Swag</Typography>
+			<Typography
+				sx={{ fontWeight: 'bold', color: 'grey', textAlign: 'center' }}>
+				Your Swag
+			</Typography>
 
 			{shoppingCart.map((item, index) => (
 				<>
-					<Typography>{item.name}</Typography>
-					<Typography>${item.price}</Typography>
+					<Typography sx={{ color: 'grey', textAlign: 'center' }}>
+						{item.name}
+					</Typography>
+					<Typography sx={{ color: 'grey', textAlign: 'center' }}>
+						${item.price}
+					</Typography>
 					<Button onClick={() => removeFromCart(index)}>
 						Remove From Cart
 					</Button>
 					<Typography>Item Total: ${calculateTotal()}</Typography>
 				</>
 			))}
-			<div>Total Order Cost: ${calculateTotal()}</div>
+			<div style={{ textAlign: 'center' }}>
+				Total Order Cost: ${calculateTotal()}
+			</div>
 			<Button variant='contained'>
 				<Link
-					to='checkout'
+					to='/'
 					style={{ textDecoration: 'none' }}>
 					<Typography sx={{ color: 'gray' }}>browse more</Typography>
 				</Link>
