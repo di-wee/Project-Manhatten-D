@@ -1,18 +1,43 @@
 import { Button, Typography } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
-//to display items that have been added to shopping cart
-//allow updating/deleting of cart item quantities
-//display cost per item and total order cost
+import ShoppingContext from '../../context/ShoppingContext';
 
 const ShoppingCart = (props) => {
-	//prop states down from apps using useContext
-	//map out the items
-	//create delete item from cart button
-	//checkout button to go proceed to checkout page
+	const shoppingCtx = useContext(ShoppingContext);
+	['Bags', 'Shoes', 'Accessories'];
+	const { shoppingCart } = shoppingCtx;
+
+	const calculateTotal = () => {
+		return shoppingCart.reduce((total, item) => total + item.price, 0);
+	};
+
+	const removeFromCart = (index) => {
+		return shoppingCart.splice(index, 0);
+	};
 	return (
 		<>
+			<Typography sx={{}}>Your Swag</Typography>
+
+			{shoppingCart.map((item, index) => (
+				<>
+					<Typography>{item.name}</Typography>
+					<Typography>${item.price}</Typography>
+					<Button onClick={() => removeFromCart(index)}>
+						Remove From Cart
+					</Button>
+					<Typography>Item Total: ${calculateTotal()}</Typography>
+				</>
+			))}
+			<div>Total Order Cost: ${calculateTotal()}</div>
+			<Button variant='contained'>
+				<Link
+					to='checkout'
+					style={{ textDecoration: 'none' }}>
+					<Typography sx={{ color: 'gray' }}>browse more</Typography>
+				</Link>
+			</Button>
+
 			<Button variant='contained'>
 				<Link
 					to='checkout'
