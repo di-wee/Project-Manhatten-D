@@ -15,13 +15,13 @@ const ProductItem = (props) => {
 		<div>
 			<Card
 				sx={{
-					width: 400,
+					width: 300,
 					margin: '2rem',
 				}}>
 				<CardActionArea>
 					<CardMedia
 						component='img'
-						height='380'
+						height='360'
 						image={`/${image[0]}`}
 					/>
 					<CardContent>
