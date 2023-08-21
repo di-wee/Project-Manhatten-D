@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button, TextField, Container, Typography, Box } from '@mui/material';
 
-function CheckoutForm() {
-	const stripe = useStripe();
-	const elements = useElements();
+const Checkout = (props) => {
 	const [formData, setFormData] = useState({
 		fullName: '',
 		address: '',
@@ -25,29 +22,11 @@ function CheckoutForm() {
 		}));
 	};
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		const { error, paymentMethod } = await stripe.createPaymentMethod({
-			type: 'card',
-			card: elements.getElement(CardElement),
-			billing_details: {
-				name: formData.fullName,
-				address: {
-					city: formData.city,
-					line1: formData.address,
-					state: formData.state,
-					postal_code: formData.zip,
-				},
-			},
-		});
-
-		if (error) {
-			console.error(error);
-		} else {
-			console.log(paymentMethod);
-			// Send paymentMethod.id to your server
-		}
+		console.log('Checkout data:', formData);
+		// Process the checkout data
+		// Redirect to confirmation page, etc.
 	};
 
 	return (
@@ -160,6 +139,6 @@ function CheckoutForm() {
 			</form>
 		</Container>
 	);
-}
+};
 
-export default CheckoutForm;
+export default Checkout;

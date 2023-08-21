@@ -10,7 +10,7 @@ const cart = require('./src/routers/cart');
 const productRoutes = require('./src/routers/products');
 const address = require('./src/routers/address');
 const userDetails = require('./src/routers/userDetails');
-
+const stripe = require('stripe')(process.env.SECRET_KEY);
 connectDB();
 const limit = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15min >> within milliseconds

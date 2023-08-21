@@ -1,4 +1,5 @@
 const Payment = require('../models/Payment');
+const Product = require('../models/Products');
 
 const getAllPaymentDetails = async (req, res) => {
 	try {
@@ -24,22 +25,37 @@ const getPaymentDetails = async (req, res) => {
 
 const createNewPayment = async (req, res) => {
 	try {
-		const createPayment = {
-			orderId: req.body.orderId,
-			paymentGateway: req.body.paymentGateway,
-			paymentDetails: {
-				paymentMethod: 'CreditCard',
-				cardNumber: req.body.cardNumber,
-				cardHolder: req.body.cardHolder,
-				expirationDate: req.body.expirationDate,
-			},
-		};
+		const product = await Product.findById(req.params.id);
 
-		const savedPayment = await Payment.create(createPayment);
-		res.json({ status: 'ok', msg: 'payment created' });
+		//if product not found = false
+		if (!product) {
+			return res.status(404).json({ error: 'product not found' });
+		}
+
+		const paymentIntent = await stripe.checkout.sessions.create({
+			line_items: [
+				{
+					name: product.name,
+					description: product.description,
+					amount: product.price * 100, // stripe wants currency in cents
+					currency: 'SGD',
+					quantity: 1,
+				},
+			],
+			mode: 'payment', //indicate for one-time payment and not subscription payment etc.
+			success_url: `${process.env.DOMAIN}/shopping-cart/checkout/payment`, //page after payment is successful
+			cancel_url: `${process.env.DOMAIN}/shopping-cart`, //page if payment is unsuccessful
+		});
+		res
+			.send({
+				clientSecret: paymentIntent.client_secret, //one-time-use token provided by stripe required by frontend to complete payment
+			})
+			.json({ status: 'ok', msg: 'payment intent created' });
 	} catch (error) {
 		console.log(error.message);
-		res.status(400).json({ status: 'error', msg: 'error getting payment' });
+		res
+			.status(500)
+			.json({ status: 'error', msg: 'unable to create payment intent' });
 	}
 };
 

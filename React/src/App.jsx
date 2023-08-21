@@ -20,6 +20,8 @@ import FAQ from './pages/FAQ';
 import ShoppingContext from './context/ShoppingContext';
 import Checkout from './components/CheckoutPages/Checkout';
 import Payment from './components/CheckoutPages/Payment';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 const theme = createTheme({
 	palette: {
@@ -32,6 +34,8 @@ const theme = createTheme({
 	},
 });
 
+const stripePromise = loadStripe(import.meta.env.VITE_API_KEY);
+
 function App() {
 	//state management for useContext
 	// const [accessories, setAccessories] = useState([]);
@@ -40,83 +44,88 @@ function App() {
 	const [shoppingCart, setShoppingCart] = useState([]);
 	return (
 		<>
-			<ThemeProvider theme={theme}>
-				<ShoppingContext.Provider
-					value={{ product, setProduct, shoppingCart, setShoppingCart }}>
-					<header>
-						<NavBar></NavBar>
-					</header>
-					<main>
-						<Routes>
-							<Route
-								path='/'
-								element={<Main />}
-							/>
-							<Route
-								path='/faqs'
-								element={<FAQ></FAQ>}
-							/>
-							<Route
-								path='/men/tops'
-								element={<MenTops></MenTops>}
-							/>
-							<Route
-								path='/men/bottoms'
-								element={<MenBottoms></MenBottoms>}
-							/>
-							<Route
-								path='/men/shoes'
-								element={<MenShoes></MenShoes>}
-							/>
-							<Route
-								path='/men/bags'
-								element={<MenBags></MenBags>}
-							/>
-							<Route
-								path='/men/accessories'
-								element={<MenAccessories></MenAccessories>}
-							/>
-							<Route
-								path='/women/tops'
-								element={<WomenTops></WomenTops>}
-							/>
-							<Route
-								path='/women/bottoms'
-								element={<WomenBottoms></WomenBottoms>}
-							/>
-							<Route
-								path='/women/shoes'
-								element={<WomenShoes></WomenShoes>}
-							/>
-							<Route
-								path='/women/bags'
-								element={<WomenBags></WomenBags>}
-							/>
-							<Route
-								path='/women/accessories'
-								element={<WomenAccessories></WomenAccessories>}
-							/>
-							<Route
-								path='/shopping-cart/checkout'
-								element={<Checkout></Checkout>}
-							/>
-							<Route
-								path='/shopping-cart/checkout/payment'
-								element={<Payment></Payment>}
-							/>
-							<Route
-								path='/shopping-cart'
-								element={
-									<ShoppingCart
-										shoppingCart={shoppingCart}
-										setShoppingCart={setShoppingCart}
-									/>
-								}
-							/>
-						</Routes>
-					</main>
-				</ShoppingContext.Provider>
-			</ThemeProvider>
+			<Elements stripe={stripePromise}>
+				<ThemeProvider theme={theme}>
+					<ShoppingContext.Provider
+						value={{ product, setProduct, shoppingCart, setShoppingCart }}>
+						<header>
+							<NavBar></NavBar>
+						</header>
+						<main>
+							<Routes>
+								<Route
+									path='/'
+									element={<Main />}
+								/>
+								<Route
+									path='/faqs'
+									element={<FAQ></FAQ>}
+								/>
+								<Route
+									path='/men/tops'
+									element={<MenTops></MenTops>}
+								/>
+								<Route
+									path='/men/bottoms'
+									element={<MenBottoms></MenBottoms>}
+								/>
+								<Route
+									path='/men/shoes'
+									element={<MenShoes></MenShoes>}
+								/>
+								<Route
+									path='/men/bags'
+									element={<MenBags></MenBags>}
+								/>
+								<Route
+									path='/men/accessories'
+									element={<MenAccessories></MenAccessories>}
+								/>
+								<Route
+									path='/women/tops'
+									element={<WomenTops></WomenTops>}
+								/>
+								<Route
+									path='/women/bottoms'
+									element={<WomenBottoms></WomenBottoms>}
+								/>
+								<Route
+									path='/women/shoes'
+									element={<WomenShoes></WomenShoes>}
+								/>
+								<Route
+									path='/women/bags'
+									element={<WomenBags></WomenBags>}
+								/>
+								<Route
+									path='/women/accessories'
+									element={<WomenAccessories></WomenAccessories>}
+								/>
+
+								<Route
+									path='/shopping-cart/checkout'
+									element={<Checkout></Checkout>}
+								/>
+
+								<Route
+									path='/shopping-cart/checkout/payment'
+									element={<Payment></Payment>}
+								/>
+
+								<Route
+									path='/shopping-cart'
+									element={
+										<ShoppingCart
+											shoppingCart={shoppingCart}
+											setShoppingCart={setShoppingCart}
+										/>
+									}
+								/>
+							</Routes>
+						</main>
+					</ShoppingContext.Provider>
+				</ThemeProvider>
+			</Elements>
 		</>
 	);
 }

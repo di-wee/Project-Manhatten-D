@@ -66,9 +66,9 @@ const ProductItem = (props) => {
 					price={price}
 					category={category}
 					subcategory={subcategory}
-					setShowModal={setShowModal}>
-					stock={stock}, setStock={setStock}
-				</ProductModal>
+					setShowModal={setShowModal}
+					stock={stock}
+					setStock={setStock}></ProductModal>
 			)}
 		</>
 	);
