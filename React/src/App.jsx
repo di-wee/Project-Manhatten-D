@@ -96,7 +96,7 @@ function App() {
 								element={<WomenAccessories></WomenAccessories>}
 							/>
 							<Route
-								path='/checkout'
+								path='/shopping-cart/checkout'
 								element={<Checkout></Checkout>}
 							/>
 							<Route
