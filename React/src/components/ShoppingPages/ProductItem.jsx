@@ -16,7 +16,6 @@ const ProductItem = (props) => {
 			<Card
 				sx={{
 					width: 300,
-					margin: '2rem',
 				}}>
 				<CardActionArea>
 					<CardMedia

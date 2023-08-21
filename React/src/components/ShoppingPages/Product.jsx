@@ -41,16 +41,17 @@ const Product = (props) => {
 		<div>
 			<Grid
 				container
-				spacing={4}>
+				alignItems='center'
+				justifyContent='center'
+				spacing={2.5}>
 				{product.map((item) => {
 					return (
 						<Grid
 							item
 							xs={12}
-							sm={6}
-							md={4}
-							lg={3}
-							sx={{ margin: '2rem' }}
+							sm={4}
+							md={3}
+							lg={2.7}
 							key={item._id}>
 							<ProductItem
 								key={item._id}
