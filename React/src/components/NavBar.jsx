@@ -127,7 +127,7 @@ const NavBar = () => {
 							</Link>
 
 							<Link
-								to={menCategory ? 'men/shoes' : 'women/sh'}
+								to={menCategory ? 'men/shoes' : 'women/shoes'}
 								style={{ textDecoration: 'none' }}>
 								<Typography sx={{ color: 'gray' }}>Shoes</Typography>
 							</Link>

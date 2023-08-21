@@ -19,6 +19,7 @@ import WomenAccessories from './pages/WomenAccessories';
 import FAQ from './pages/FAQ';
 import ShoppingContext from './context/ShoppingContext';
 import Checkout from './components/CheckoutPages/Checkout';
+import Payment from './components/CheckoutPages/Payment';
 
 const theme = createTheme({
 	palette: {
@@ -98,6 +99,10 @@ function App() {
 							<Route
 								path='/shopping-cart/checkout'
 								element={<Checkout></Checkout>}
+							/>
+							<Route
+								path='/shopping-cart/checkout/payment'
+								element={<Payment></Payment>}
 							/>
 							<Route
 								path='/shopping-cart'

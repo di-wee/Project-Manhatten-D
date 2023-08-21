@@ -1,7 +1,15 @@
-import { Dialog, DialogTitle, DialogContent, Box, Button } from '@mui/material';
+import {
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	Box,
+	Button,
+	IconButton,
+} from '@mui/material';
 
 import React, { useContext } from 'react';
 import ShoppingContext from '../../context/ShoppingContext';
+import { Close } from '@mui/icons-material';
 
 const ProductModal = (props) => {
 	const {
@@ -29,8 +37,13 @@ const ProductModal = (props) => {
 
 		setShoppingCart((prevCart) => [...prevCart, addedItem]);
 	};
-
+	const handleClose = () => {
+		setShowModal(false);
+		handleCart();
+	};
 	console.log(shoppingCart);
+
+	const images = [image1, image2, image3, image4].filter(Boolean); // filter for any images that is undefined
 
 	return (
 		<>
@@ -39,24 +52,25 @@ const ProductModal = (props) => {
 				open={true}
 				maxWidth='xl'
 				fullWidth>
+				<Button
+					onClick={() => setShowModal(false)}
+					variant='outlined'
+					sx={{
+						position: 'absolute',
+						top: '10px',
+						right: '10px',
+						width: '10px',
+						color: 'black',
+						backgroundColor: 'white',
+						borderColor: 'black',
+						justifyItems: 'center',
+						margin: '10px auto',
+						zIndex: 1, // to ensure it appears above other content
+					}}>
+					X
+				</Button>
 				<DialogTitle sx={{ textAlign: 'center', marginTop: '20px' }}>
 					<h3>{name}</h3>
-					<Button
-						onClick={() => setShowModal(false)}
-						variant='outlined'
-						sx={{
-							position: 'absolute',
-							top: '10px',
-							right: '10px',
-							width: '10px',
-							color: 'black',
-							backgroundColor: 'white',
-							borderColor: 'black',
-							justifyItems: 'center',
-							margin: '10px auto',
-						}}>
-						X
-					</Button>
 				</DialogTitle>
 
 				<DialogContent dividers>
@@ -73,26 +87,13 @@ const ProductModal = (props) => {
 							fontSize: '18px',
 						}}>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							<img
-								src={`/${image1}`}
-								style={{ width: '300px', margin: '5px' }}
-							/>
-							{image2 && (
-								<>
-									<img
-										src={`/${image2}`}
-										style={{ width: '300px', margin: '5px' }}
-									/>
-									<img
-										src={`/${image3}`}
-										style={{ width: '300px', margin: '5px' }}
-									/>
-									<img
-										src={`/${image4}`}
-										style={{ width: '300px', margin: '5px' }}
-									/>
-								</>
-							)}
+							{images.map((img, idx) => (
+								<img
+									key={idx}
+									src={`/${img}`}
+									style={{ width: '300px', margin: '5px' }}
+								/>
+							))}
 						</div>
 						<br />
 						<p>
@@ -108,7 +109,7 @@ const ProductModal = (props) => {
 							<strong>Subcategory:</strong> {subcategory}
 						</p>
 						<Button
-							onClick={handleCart}
+							onClick={handleClose}
 							style={{ width: '150px' }}
 							variant='contained'
 							sx={{

@@ -19,7 +19,7 @@ const ProductItem = (props) => {
 				sx={{
 					width: 300,
 				}}>
-				<CardActionArea>
+				<CardActionArea onClick={() => setShowModal(true)}>
 					<CardMedia
 						component='img'
 						height='360'
@@ -35,7 +35,7 @@ const ProductItem = (props) => {
 						<Typography
 							variant='body2'
 							color='text.secondary'>
-							{price}
+							${price}
 						</Typography>
 						<Button
 							onClick={() => setShowModal(true)}
