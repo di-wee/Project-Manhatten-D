@@ -23,6 +23,8 @@ const ProductModal = (props) => {
 		category,
 		subcategory,
 		setShowModal,
+		stock,
+		setStock,
 	} = props;
 
 	const cartCtx = useContext(ShoppingContext);
@@ -108,19 +110,23 @@ const ProductModal = (props) => {
 						<p>
 							<strong>Subcategory:</strong> {subcategory}
 						</p>
-						<Button
-							onClick={handleClose}
-							style={{ width: '150px' }}
-							variant='contained'
-							sx={{
-								width: '150px',
-								color: 'white', // Set the text color
-								backgroundColor: 'black', // Set the background color
-								justifyItems: 'center',
-								margin: '10px auto',
-							}}>
-							Add to Cart
-						</Button>
+						{stock > 0 ? (
+							<Button
+								onClick={handleCart}
+								style={{ width: '150px' }}
+								variant='contained'
+								sx={{
+									width: '150px',
+									color: 'white', // Set the text color
+									backgroundColor: 'black', // Set the background color
+									justifyItems: 'center',
+									margin: '10px auto',
+								}}>
+								Add to Cart
+							</Button>
+						) : (
+							<p style={{ color: 'red' }}>Out of stock</p>
+						)}
 					</Box>
 				</DialogContent>
 			</Dialog>

@@ -12,6 +12,7 @@ import ProductModal from './ProductModal';
 const ProductItem = (props) => {
 	const { image, name, description, price, category, subcategory } = props;
 	const [showModal, setShowModal] = useState(false);
+	const [stock, setStock] = useState(5);
 
 	return (
 		<>
@@ -65,7 +66,9 @@ const ProductItem = (props) => {
 					price={price}
 					category={category}
 					subcategory={subcategory}
-					setShowModal={setShowModal}></ProductModal>
+					setShowModal={setShowModal}>
+					stock={stock}, setStock={setStock}
+				</ProductModal>
 			)}
 		</>
 	);
