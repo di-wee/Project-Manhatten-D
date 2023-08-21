@@ -8,7 +8,7 @@ const {
 } = require('../controllers/payment');
 
 router
-	.post('/payment/process', createNewPayment)
+	.post('/payment/intent/:id', createNewPayment)
 	.post('/payment/callback/:id', storePaymentCallback)
 
 	// for checking purposes

@@ -32,19 +32,12 @@ const createNewPayment = async (req, res) => {
 			return res.status(404).json({ error: 'product not found' });
 		}
 
-		const paymentIntent = await stripe.checkout.sessions.create({
-			line_items: [
-				{
-					name: product.name,
-					description: product.description,
-					amount: product.price * 100, // stripe wants currency in cents
-					currency: 'SGD',
-					quantity: 1,
-				},
-			],
-			mode: 'payment', //indicate for one-time payment and not subscription payment etc.
-			success_url: `${process.env.DOMAIN}/shopping-cart/checkout/payment`, //page after payment is successful
-			cancel_url: `${process.env.DOMAIN}/shopping-cart`, //page if payment is unsuccessful
+		const paymentIntent = await stripe.paymentIntents.create({
+			name: product.name,
+			description: product.description,
+			amount: product.price * 100, // stripe wants currency in cents
+			currency: 'SGD',
+			quantity: 1,
 		});
 		res
 			.send({

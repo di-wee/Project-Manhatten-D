@@ -1,16 +1,14 @@
-const mongoose = require("mongoose");
-const today = new Date();
-const now = today.getHours() + ":" + today.getMinutes();
+const mongoose = require('mongoose');
 
-const ShoppingCartSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true, minLength: 1, maxLength: 50 },
-    price: { type: Number, required: true, minLength: 1, maxLength: 50 },
-    description: { type: String, default: today },
-    image: { type: String, required: true },
-    category: { type: String, required: true },
-  },
-  { collection: "ShoppingCart" }
-);
+const CartItemSchema = new mongoose.Schema({
+	product: { type: mongoose.Schema.Types.ObjectId, ref: 'Products' }, //id from Products collection
+	price: { type: Number, required: true },
+	quantity: { type: Number, default: 1 },
+});
 
-module.exports = mongoose.model("ShoppingCart", ShoppingCartSchema);
+const CartSchema = new Schema({
+	items: [CartItemSchema],
+	totalAmount: { type: Number, default: 0 },
+});
+
+module.exports = mongoose.model('Cart', CartSchema);
