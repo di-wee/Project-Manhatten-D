@@ -7,6 +7,7 @@ const Product = (props) => {
 	const { category, subcategory } = props; //category and subcategory propped down from pages
 	//state management
 	const shoppingCtx = useContext(ShoppingContext);
+
 	const { product, setProduct } = shoppingCtx;
 
 	const getProducts = async (category, subcategory) => {

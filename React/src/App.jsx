@@ -18,6 +18,7 @@ import WomenBags from './pages/WomenBags';
 import WomenAccessories from './pages/WomenAccessories';
 import FAQ from './pages/FAQ';
 import ShoppingContext from './context/ShoppingContext';
+import Checkout from './components/CheckoutPages/Checkout';
 
 const theme = createTheme({
 	palette: {
@@ -35,10 +36,12 @@ function App() {
 	// const [accessories, setAccessories] = useState([]);
 	// const [shoes, setShoes] = useState([]);
 	const [product, setProduct] = useState([]);
+	const [shoppingCart, setShoppingCart] = useState([]);
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<ShoppingContext.Provider value={{ product, setProduct }}>
+				<ShoppingContext.Provider
+					value={{ product, setProduct, shoppingCart, setShoppingCart }}>
 					<header>
 						<NavBar></NavBar>
 					</header>
@@ -93,8 +96,17 @@ function App() {
 								element={<WomenAccessories></WomenAccessories>}
 							/>
 							<Route
+								path='/checkout'
+								element={<Checkout></Checkout>}
+							/>
+							<Route
 								path='/shopping-cart'
-								element={<ShoppingCart />}
+								element={
+									<ShoppingCart
+										shoppingCart={shoppingCart}
+										setShoppingCart={setShoppingCart}
+									/>
+								}
 							/>
 						</Routes>
 					</main>
