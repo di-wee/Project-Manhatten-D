@@ -77,18 +77,22 @@ const ProductModal = (props) => {
 								src={`/${image1}`}
 								style={{ width: '300px', margin: '5px' }}
 							/>
-							<img
-								src={`/${image2}`}
-								style={{ width: '300px', margin: '5px' }}
-							/>
-							<img
-								src={`/${image3}`}
-								style={{ width: '300px', margin: '5px' }}
-							/>
-							<img
-								src={`/${image4}`}
-								style={{ width: '300px', margin: '5px' }}
-							/>
+							{image2 && (
+								<>
+									<img
+										src={`/${image2}`}
+										style={{ width: '300px', margin: '5px' }}
+									/>
+									<img
+										src={`/${image3}`}
+										style={{ width: '300px', margin: '5px' }}
+									/>
+									<img
+										src={`/${image4}`}
+										style={{ width: '300px', margin: '5px' }}
+									/>
+								</>
+							)}
 						</div>
 						<br />
 						<p>
