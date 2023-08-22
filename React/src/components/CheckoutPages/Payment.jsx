@@ -1,8 +1,6 @@
 import React from 'react';
 
 //handle payment processing
-
-//modal
 //fetch payment data from API for receipt
 //re-iterate items data
 

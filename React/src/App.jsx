@@ -44,7 +44,7 @@ function App() {
 	const [shoppingCart, setShoppingCart] = useState([]);
 	return (
 		<>
-		<LandingPage></LandingPage>
+		{/* <LandingPage></LandingPage> */}
 			<Elements stripe={stripePromise}>
 				<ThemeProvider theme={theme}>
 					<ShoppingContext.Provider
