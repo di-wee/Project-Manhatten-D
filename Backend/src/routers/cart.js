@@ -6,7 +6,6 @@ const {
 	addNewCart,
 	deleteItemFromCart,
 	updateCartItem,
-	addNewCart,
 } = require('../controllers/cart');
 
 router.get('/cart', getCart);
