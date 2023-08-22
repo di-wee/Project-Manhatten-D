@@ -1,15 +1,6 @@
-import {
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	Box,
-	Button,
-	IconButton,
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Box, Button } from '@mui/material';
 
-import React, { useContext } from 'react';
-import ShoppingContext from '../../context/ShoppingContext';
-import { Close } from '@mui/icons-material';
+import React from 'react';
 
 const ProductModal = (props) => {
 	const {
@@ -22,28 +13,11 @@ const ProductModal = (props) => {
 		price,
 		category,
 		subcategory,
+		showModal,
 		setShowModal,
 		stock,
-		setStock,
+		handleCart,
 	} = props;
-
-	const cartCtx = useContext(ShoppingContext);
-	const { shoppingCart, setShoppingCart } = cartCtx;
-
-	const handleCart = () => {
-		const addedItem = {
-			id: Math.floor(Math.random() * 100000).toString(),
-			name: name,
-			price: price,
-		};
-
-		setShoppingCart((prevCart) => [...prevCart, addedItem]);
-	};
-	const handleClose = () => {
-		setShowModal(false);
-		handleCart();
-	};
-	console.log(shoppingCart);
 
 	const images = [image1, image2, image3, image4].filter(Boolean); // filter for any images that is undefined
 
@@ -51,7 +25,7 @@ const ProductModal = (props) => {
 		<>
 			<Dialog
 				onClose={() => setShowModal(false)}
-				open={true}
+				open={showModal}
 				maxWidth='xl'
 				fullWidth>
 				<Button
@@ -112,7 +86,10 @@ const ProductModal = (props) => {
 						</p>
 						{stock > 0 ? (
 							<Button
-								onClick={handleCart}
+								onClick={() => {
+									handleCart();
+									setShowModal(false);
+								}}
 								style={{ width: '150px' }}
 								variant='contained'
 								sx={{
