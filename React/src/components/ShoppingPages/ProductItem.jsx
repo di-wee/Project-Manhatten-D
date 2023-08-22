@@ -6,33 +6,61 @@ import {
 	Typography,
 	Button,
 } from '@mui/material';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ProductModal from './ProductModal';
 import ShoppingContext from '../../context/ShoppingContext';
 
 const ProductItem = (props) => {
-	const { image, name, description, price, category, subcategory } = props;
+	const { id, image, name, description, price, category, subcategory } = props;
 	const [showModal, setShowModal] = useState(false);
 	const [stock, setStock] = useState(5);
 
 	const cartCtx = useContext(ShoppingContext);
-	const { shoppingCart, setShoppingCart } = cartCtx;
+	const { shoppingCart, setShoppingCart, cartItems, setCartItems } = cartCtx;
 
-	const handleCart = () => {
+	//PUT (store items in shopping cart in database)
+	const addItems = async (productid) => {
+		const res = await fetch(import.meta.env.VITE_SERVER + '/api/cart/', {
+			method: 'PUT',
+
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				productId: productid,
+				cartId: '64e4753897d26333f7945a71',
+				price: price,
+				quantity: 1,
+			}),
+		});
+
+		if (res.status === 200) {
+			console.log(res.status);
+			const addedItem = {
+				id: id,
+				name: name,
+				price: price,
+				quantity: 1,
+			};
+			getItems();
+		}
+	};
+
+	const handleCart = (productid) => {
 		const addedItem = {
-			id: Math.floor(Math.random() * 100000).toString(),
+			id: id,
 			name: name,
 			price: price,
 		};
 
 		setShoppingCart((prevCart) => [...prevCart, addedItem]);
+		addItems(productid);
 		console.log(shoppingCart);
 	};
 
-	//   //POST (store items in shopping cart in database)
-	//   const addItems = async () => {
-	//  const res = await fetch(import.meta.env.VITE_SERVER) + "/product"
-	//   }
+	useEffect(() => {
+		getItems();
+	}, []);
 
 	return (
 		<>
@@ -73,7 +101,7 @@ const ProductItem = (props) => {
 						</Button>
 						{stock > 0 ? (
 							<Button
-								onClick={handleCart}
+								onClick={() => handleCart(id)}
 								style={{ width: '110px' }}
 								variant='contained'
 								sx={{
