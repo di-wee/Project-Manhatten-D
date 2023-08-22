@@ -46,7 +46,7 @@ function App() {
 
 	const getItems = async () => {
 		const res = await fetch(
-			import.meta.env.VITE_SERVER + '/api/cart/64e4753897d26333f7945a71'
+			import.meta.env.VITE_SERVER + '/api/cart/64e4bb81b63cbb3c95ca9c34'
 		);
 
 		if (!res.ok) {
@@ -54,12 +54,12 @@ function App() {
 		}
 		const data = await res.json();
 		setCartItems(data);
-		console.log(data);
 	};
 
 	useEffect(() => {
 		getItems();
-	});
+		console.log(cartItems);
+	}, []);
 
 	return (
 		<>
@@ -73,6 +73,7 @@ function App() {
 							setShoppingCart,
 							cartItems,
 							setCartItems,
+							getItems,
 						}}>
 						<header>
 							<NavBar></NavBar>

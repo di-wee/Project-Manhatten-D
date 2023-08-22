@@ -5,15 +5,7 @@ import ShoppingContext from '../../context/ShoppingContext';
 
 const ShoppingCart = (props) => {
 	const shoppingCtx = useContext(ShoppingContext);
-	const { shoppingCart } = shoppingCtx;
-
-	//   const calculateTotal = () => {
-	//     return shoppingCart.reduce((total, item) => total + item.price, 0);
-	//   };
-
-	//   const removeFromCart = (index) => {
-	//     return shoppingCart.splice(index, 0);
-	//   };
+	const { shoppingCart, cartItems } = shoppingCtx;
 
 	return (
 		<>
@@ -22,8 +14,7 @@ const ShoppingCart = (props) => {
 				Your Swag
 			</Typography>
 			<>
-				{console.log(shoppingCart.items)}
-				{shoppingCart.items.map((item, index) => (
+				{shoppingCart.map((item, index) => (
 					<>
 						<Typography sx={{ color: 'grey', textAlign: 'center' }}>
 							{item.name}
@@ -56,7 +47,7 @@ const ShoppingCart = (props) => {
 			</Button>
 			<Button
 				variant='contained'
-				onClick={() => console.log(shoppingCart)}>
+				onClick={() => console.log(cartItems)}>
 				Click Me
 			</Button>
 		</>

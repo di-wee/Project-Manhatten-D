@@ -16,7 +16,8 @@ const ProductItem = (props) => {
 	const [stock, setStock] = useState(5);
 
 	const cartCtx = useContext(ShoppingContext);
-	const { shoppingCart, setShoppingCart, cartItems, setCartItems } = cartCtx;
+	const { shoppingCart, setShoppingCart, cartItems, setCartItems, getItems } =
+		cartCtx;
 
 	//PUT (store items in shopping cart in database)
 	const addItems = async (productid) => {
@@ -28,21 +29,16 @@ const ProductItem = (props) => {
 			},
 			body: JSON.stringify({
 				productId: productid,
-				cartId: '64e4753897d26333f7945a71',
+				cartId: '64e4bb81b63cbb3c95ca9c34', //temporarily hardcoding this
 				price: price,
 				quantity: 1,
 			}),
 		});
 
-		if (res.status === 200) {
-			console.log(res.status);
-			const addedItem = {
-				id: id,
-				name: name,
-				price: price,
-				quantity: 1,
-			};
+		if (res.ok) {
 			getItems();
+		} else {
+			console.log('error adding items to cart');
 		}
 	};
 
@@ -53,9 +49,10 @@ const ProductItem = (props) => {
 			price: price,
 		};
 
-		setShoppingCart((prevCart) => [...prevCart, addedItem]);
+		setShoppingCart((prevCart) => [...prevCart, addedItem]); //state for item details
 		addItems(productid);
 		console.log(shoppingCart);
+		console.log(cartItems);
 	};
 
 	useEffect(() => {

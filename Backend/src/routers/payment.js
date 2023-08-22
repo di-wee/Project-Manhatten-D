@@ -6,7 +6,7 @@ const {
 } = require('../controllers/payment');
 
 router
-	.post('/payment/intent', createNewPayment)
+	.post('/payment/intent/:cartId', createNewPayment)
 
 	// for checking purposes
 	.get('/payment/:paymentIntentId', getPaymentStripe);

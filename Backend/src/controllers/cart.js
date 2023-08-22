@@ -12,7 +12,6 @@ const getCart = async (req, res) => {
 		res.status(200).json(cart);
 	} catch (error) {
 		console.log(error.message);
-		res.json({ status: 'error', msg: 'error getting cart' });
 	}
 };
 
@@ -47,9 +46,9 @@ const addNewCart = async (req, res) => {
 
 		//managing quanities for cart
 
-		//finding the index in the cart if the item that is added matches
+		//checking if item added to cart already exists in cart
 		const findIndex = cart.items.findIndex(
-			(item) => item.product.toString() === req.body.productId // item.id is essentially the objectID of a product
+			(item) => item.product.toString() === req.body.productId // item.product is essentially the objectID of a product
 		);
 
 		// if the product is in the cart, update its quantity
