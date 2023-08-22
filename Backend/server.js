@@ -11,9 +11,10 @@ const userDetails = require("./src/routers/userDetails");
 const stripe = require("stripe")(process.env.TEST_KEY); //test key needed to access stripe
 const session = require("express-session"); //start of every session is when db is started. when db resets, session restarts
 connectDB();
-
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
