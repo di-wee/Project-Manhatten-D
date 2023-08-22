@@ -1,18 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const {
-	getAllPaymentDetails,
-	getPaymentDetails,
+	getPaymentStripe,
 	createNewPayment,
-	storePaymentCallback,
 } = require('../controllers/payment');
 
 router
-	.post('/payment/intent/:id', createNewPayment)
-	.post('/payment/callback/:id', storePaymentCallback)
+	.post('/payment/intent', createNewPayment)
 
 	// for checking purposes
-	.get('/payment', getAllPaymentDetails)
-	.get('/payment/:id', getPaymentDetails);
+	.get('/payment/:paymentIntentId', getPaymentStripe);
 
 module.exports = router;

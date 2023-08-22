@@ -1,28 +1,19 @@
-const Payment = require('../models/Payment');
-const Product = require('../models/Products');
+//this is solely for stripe API
 
-const getAllPaymentDetails = async (req, res) => {
+const getPaymentStripe = async (req, res) => {
 	try {
-		const getPaymentDetails = await Payment.find();
-		res.json(getPaymentDetails);
+		//retrieving paymentintent from stripe server via params.id
+		const paymentIntent = await stripe.paymentIntents.retrieve(
+			req.params.paymentIntentId
+		);
+		res.json(paymentIntent);
 	} catch (error) {
 		console.log(error.message);
 		res
-			.status(400)
-			.json({ status: 'error', msg: 'error getting all payments' });
+			.status(500)
+			.send({ status: 'error', msg: 'failed to retrieve payment intent' });
 	}
 };
-
-const getPaymentDetails = async (req, res) => {
-	try {
-		const getPaymentDetailsById = await Payment.findById(req.params.id);
-		res.json(getPaymentDetailsById);
-	} catch (error) {
-		console.log(error.message);
-		res.status(400).json({ status: 'error', msg: 'error getting payments' });
-	}
-};
-
 const createNewPayment = async (req, res) => {
 	try {
 		const cart = req.session.cart;
@@ -42,7 +33,7 @@ const createNewPayment = async (req, res) => {
 			currency: 'SGD',
 		});
 
-		// Respond with the client secret for the frontend to handle
+		// respond with the client secret for the frontend to handle
 		res.json({
 			clientSecret: paymentIntent.client_secret,
 			status: 'ok',
@@ -56,23 +47,7 @@ const createNewPayment = async (req, res) => {
 	}
 };
 
-const storePaymentCallback = async (req, res) => {
-	try {
-		const payment = await Payment.findById(req.params.id);
-		if (!payment) {
-			return res.status(404).json({ message: 'Payment not found' }); //payment false === not found
-		}
-		payment.gatewayResponse = req.body;
-		await payment.save();
-	} catch (error) {
-		console.log(error.message);
-		res.status(400).json({ status: 'error', msg: 'error getting payment' });
-	}
-};
-
 module.exports = {
-	getAllPaymentDetails,
-	getPaymentDetails,
+	getPaymentStripe,
 	createNewPayment,
-	storePaymentCallback,
 };
