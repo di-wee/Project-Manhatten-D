@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Button, TextField, Container, Typography, Box } from '@mui/material';
+import {
+	Button,
+	TextField,
+	Container,
+	Typography,
+	Box,
+	CircularProgress,
+} from '@mui/material';
 
 function CheckoutForm() {
 	const stripe = useStripe();
@@ -11,10 +18,6 @@ function CheckoutForm() {
 		city: '',
 		state: '',
 		zip: '',
-		cardName: '',
-		cardNumber: '',
-		expiration: '',
-		cvv: '',
 	});
 	const [clientSecret, setClientSecret] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -154,51 +157,54 @@ function CheckoutForm() {
 				</Box>
 				<Typography variant='h6'>Payment Information</Typography>
 				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='Cardholder Name'
-						name='cardName'
-						value={formData.cardName}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='Card Number'
-						name='cardNumber'
-						value={formData.cardNumber}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='Expiration Date'
-						name='expiration'
-						value={formData.expiration}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='CVV'
-						name='cvv'
-						value={formData.cvv}
-						onChange={handleInputChange}
-					/>
+					<Typography variant='subtitle2'>Credit Card</Typography>
+					<Box
+						sx={{
+							border: '1px solid rgba(0, 0, 0, 0.23)',
+							borderRadius: '4px',
+							p: 1,
+							'&:hover': {
+								borderColor: 'rgba(0, 0, 0, 0.87)',
+							},
+							'&.Mui-focused': {
+								borderColor: 'primary.main',
+								boxShadow: (t) => `0 0 0 0.2rem ${t.palette.primary.light}`,
+							},
+						}}>
+						<CardElement
+							options={{
+								style: {
+									base: {
+										fontSize: '16px',
+										color: '#424770',
+										'::placeholder': {
+											color: '#aab7c4',
+										},
+									},
+									invalid: {
+										color: '#9e2146',
+									},
+								},
+							}}
+						/>
+					</Box>
 				</Box>
 				<Button
+					onClick={handleSubmit}
 					type='submit'
 					variant='contained'
 					color='primary'
-					fullWidth>
-					Complete Checkout
+					fullWidth
+					disabled={loading}
+					startIcon={
+						loading ? (
+							<CircularProgress
+								size={20}
+								color='inherit'
+							/>
+						) : null
+					}>
+					{loading ? 'Processing...' : 'Complete Checkout'}
 				</Button>
 			</form>
 		</Container>
