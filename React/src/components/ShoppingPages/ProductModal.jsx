@@ -1,6 +1,14 @@
-import { Dialog, DialogTitle, DialogContent, Box, Button } from '@mui/material';
+import {
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	Box,
+	Button,
+	TextField,
+	Typography,
+} from '@mui/material';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const ProductModal = (props) => {
 	const {
@@ -18,9 +26,9 @@ const ProductModal = (props) => {
 		stock,
 		handleCart,
 	} = props;
-
+	const [value, setValue] = useState(0);
 	const images = [image1, image2, image3, image4].filter(Boolean); // filter for any images that is undefined
-
+	const handleChange = (event) => {};
 	return (
 		<>
 			<Dialog
@@ -84,6 +92,16 @@ const ProductModal = (props) => {
 						<p>
 							<strong>Subcategory:</strong> {subcategory}
 						</p>
+						<Box>
+							<Typography>Quantity:</Typography>
+							<TextField
+								value={value}
+								variant='outlined'
+								type='number'
+								inputProps={{ min: '0' }}
+								style={{ margin: '0 10px' }}></TextField>
+						</Box>
+
 						{stock > 0 ? (
 							<Button
 								onClick={() => {
