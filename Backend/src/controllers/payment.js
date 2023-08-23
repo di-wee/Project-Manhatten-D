@@ -1,4 +1,8 @@
+const stripe = require('stripe')(process.env.TEST_KEY);
+
 //this is solely for stripe API
+
+const Cart = require('../models/Cart');
 
 const getPaymentStripe = async (req, res) => {
 	try {
@@ -16,26 +20,22 @@ const getPaymentStripe = async (req, res) => {
 };
 const createNewPayment = async (req, res) => {
 	try {
-		const cart = req.session.cart;
+		const cart = await Cart.findById(req.params.cartId);
 
 		if (!cart || cart.items.length === 0) {
 			return res.status(400).json({ error: 'cart is empty' });
 		}
 
-		//  total amount from the cart
-		const totalAmount = cart.items.reduce((sum, item) => {
-			return sum + item.price * item.quantity;
-		}, 0);
-
 		// creating the paymentintent
 		const paymentIntent = await stripe.paymentIntents.create({
-			amount: totalAmount * 100, //stripe only accepts cents
+			amount: cart.totalAmount * 100, //stripe only accepts cents
 			currency: 'SGD',
 		});
 
 		// respond with the client secret for the frontend to handle
 		res.json({
 			clientSecret: paymentIntent.client_secret,
+			paymentIntentId: paymentIntent.id,
 			status: 'ok',
 			msg: 'payment intent created',
 		});

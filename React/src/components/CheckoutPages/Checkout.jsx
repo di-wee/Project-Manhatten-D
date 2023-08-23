@@ -7,11 +7,14 @@ import {
 	Typography,
 	Box,
 	CircularProgress,
+	Stepper,
+	Step,
+	StepLabel,
 } from '@mui/material';
 
 function CheckoutForm() {
 	const stripe = useStripe();
-	const elements = useElements(); //calls the layout/UI of stripe
+	const elements = useElements();
 	const [formData, setFormData] = useState({
 		fullName: '',
 		address: '',
@@ -21,10 +24,13 @@ function CheckoutForm() {
 	});
 	const [clientSecret, setClientSecret] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const createPaymentIntent = async () => {
+	const [activeStep, setActiveStep] = useState(0);
+	const steps = ['Shipping Details', 'Payment Information'];
+
+	const createPaymentIntent = async (cartId) => {
 		try {
 			const response = await fetch(
-				import.meta.env.VITE_SERVER + '/api/payment/intent',
+				`${import.meta.env.VITE_SERVER}/api/payment/intent/${cartId}`,
 				{
 					method: 'POST',
 					headers: {
@@ -34,7 +40,8 @@ function CheckoutForm() {
 			);
 
 			const data = await response.json();
-			setClientSecret(data.clientSecret); // clientsecret from backend side
+			setClientSecret(data.clientSecret);
+			return data.clientSecret;
 		} catch (error) {
 			console.log(error.message);
 			alert('error creating payment intent!');
@@ -45,10 +52,11 @@ function CheckoutForm() {
 		event.preventDefault();
 		setLoading(true);
 
-		await createPaymentIntent(); //setting clientSecret to state
+		const receivedClientSecret = await createPaymentIntent(
+			'64e4bb81b63cbb3c95ca9c34'
+		);
 
-		if (!clientSecret) {
-			// if clientSecret is not set to state
+		if (!receivedClientSecret) {
 			console.log('error saving clientSecret for backend');
 			setLoading(false);
 			return;
@@ -56,7 +64,7 @@ function CheckoutForm() {
 
 		const { error, paymentMethod } = await stripe.createPaymentMethod({
 			type: 'card',
-			card: elements.getElement(CardElement), // this is stripe's element so none of the card details goes to our backend; goes straight to stripe
+			card: elements.getElement(CardElement),
 			billing_details: {
 				name: formData.fullName,
 				address: {
@@ -73,9 +81,6 @@ function CheckoutForm() {
 			alert('error with payment');
 			setLoading(false);
 		} else {
-			// confirming the PaymentIntent with the payment method
-
-			//renaming error to confirmationError for clarity
 			const { error: confirmationError } = await stripe.confirmCardPayment(
 				clientSecret,
 				{
@@ -87,7 +92,7 @@ function CheckoutForm() {
 				console.log('Error confirming PaymentIntent:', confirmationError);
 				setLoading(false);
 			} else {
-				console.log('Payment successful!');
+				alert('Payment successful!');
 			}
 		}
 	};
@@ -96,6 +101,7 @@ function CheckoutForm() {
 		const { name, value } = event.target;
 		setFormData((prevState) => ({ ...prevState, [name]: value }));
 	};
+
 	return (
 		<Container>
 			<Typography
@@ -103,95 +109,94 @@ function CheckoutForm() {
 				align='center'>
 				Checkout
 			</Typography>
+			<Stepper activeStep={activeStep}>
+				{steps.map((label, index) => (
+					<Step key={index}>
+						<StepLabel>{label}</StepLabel>
+					</Step>
+				))}
+			</Stepper>
 			<form onSubmit={handleSubmit}>
-				<Typography variant='h6'>Shipping Details</Typography>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='Full Name'
-						name='fullName'
-						value={formData.fullName}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='Address'
-						name='address'
-						value={formData.address}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='City'
-						name='city'
-						value={formData.city}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='State'
-						name='state'
-						value={formData.state}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box mb={2}>
-					<TextField
-						fullWidth
-						required
-						label='ZIP Code'
-						name='zip'
-						value={formData.zip}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Typography variant='h6'>Payment Information</Typography>
-				<Box mb={2}>
-					<Typography variant='subtitle2'>Credit Card</Typography>
-					<Box
-						sx={{
-							border: '1px solid rgba(0, 0, 0, 0.23)',
-							borderRadius: '4px',
-							p: 1,
-							'&:hover': {
-								borderColor: 'rgba(0, 0, 0, 0.87)',
-							},
-							'&.Mui-focused': {
-								borderColor: 'primary.main',
-								boxShadow: (t) => `0 0 0 0.2rem ${t.palette.primary.light}`,
-							},
-						}}>
-						<CardElement
-							options={{
-								style: {
-									base: {
-										fontSize: '16px',
-										color: '#424770',
-										'::placeholder': {
-											color: '#aab7c4',
+				{activeStep === 0 ? (
+					<>
+						<Typography variant='h6'>Shipping Details</Typography>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='Full Name'
+								name='fullName'
+								value={formData.fullName}
+								onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='Address'
+								name='address'
+								value={formData.address}
+								onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='City'
+								name='city'
+								value={formData.city}
+								onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='State'
+								name='state'
+								value={formData.state}
+								onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='ZIP Code'
+								name='zip'
+								value={formData.zip}
+								onChange={handleInputChange}
+							/>
+						</Box>
+					</>
+				) : (
+					<>
+						<Typography variant='h6'>Payment Information</Typography>
+						<Box mb={2}>
+							<CardElement
+								options={{
+									style: {
+										base: {
+											fontSize: '16px',
+											color: '#424770',
+											'::placeholder': {
+												color: '#aab7c4',
+											},
+										},
+										invalid: {
+											color: '#9e2146',
 										},
 									},
-									invalid: {
-										color: '#9e2146',
-									},
-								},
-							}}
-						/>
-					</Box>
-				</Box>
+								}}
+							/>
+						</Box>
+					</>
+				)}
 				<Button
-					onClick={handleSubmit}
-					type='submit'
+					onClick={() => (activeStep === 0 ? setActiveStep(1) : handleSubmit())}
+					type={activeStep === 0 ? 'button' : 'submit'}
 					variant='contained'
 					color='primary'
 					fullWidth
@@ -204,7 +209,11 @@ function CheckoutForm() {
 							/>
 						) : null
 					}>
-					{loading ? 'Processing...' : 'Complete Checkout'}
+					{loading
+						? 'Processing...'
+						: activeStep === 0
+						? 'Next'
+						: 'Complete Checkout'}
 				</Button>
 			</form>
 		</Container>

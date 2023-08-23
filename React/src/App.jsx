@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '@fontsource/roboto-condensed';
 import Main from './pages/Main';
 import { Route, Routes } from 'react-router';
@@ -42,13 +42,40 @@ function App() {
 	// const [shoes, setShoes] = useState([]);
 	const [product, setProduct] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
+	const [cartItems, setCartItems] = useState([]);
+
+	const getItems = async () => {
+		const res = await fetch(
+			import.meta.env.VITE_SERVER + '/api/cart/64e4bb81b63cbb3c95ca9c34'
+		);
+
+		if (!res.ok) {
+			throw new Error('issue in network response');
+		}
+		const data = await res.json();
+		setCartItems(data);
+	};
+
+	useEffect(() => {
+		getItems();
+		console.log(cartItems);
+	}, []);
+
 	return (
 		<>
 		{/* <LandingPage></LandingPage> */}
 			<Elements stripe={stripePromise}>
 				<ThemeProvider theme={theme}>
 					<ShoppingContext.Provider
-						value={{ product, setProduct, shoppingCart, setShoppingCart }}>
+						value={{
+							product,
+							setProduct,
+							shoppingCart,
+							setShoppingCart,
+							cartItems,
+							setCartItems,
+							getItems,
+						}}>
 						<header>
 							<NavBar></NavBar>
 						</header>

@@ -1,36 +1,54 @@
-const cartModel = require('../models/Cart');
+const CartModel = require('../models/Cart');
 const Product = require('../models/Products');
+const mongoose = require('mongoose');
 
 const getCart = async (req, res) => {
 	try {
-		res.json(req.session.cart || { items: [], totalAmount: 0 });
+		const cart = await CartModel.findById(req.params.id);
+
+		if (!cart) {
+			res.status(400).json({ status: 'error', msg: 'no cart found' });
+		}
+		res.status(200).json(cart);
 	} catch (error) {
 		console.log(error.message);
-		res.json({ status: 'error', msg: 'error getting cart' });
+	}
+};
+
+const createEmptyCart = async (req, res) => {
+	try {
+		const newCart = new CartModel(); // create a new empty cart .
+		await newCart.save(); //saving it to DB
+		res.status(200).json({
+			status: 'ok',
+			cartId: newCart._id,
+			msg: 'created empty cart!',
+		});
+	} catch (error) {
+		res.status(400).json({ status: 'error', msg: 'error creating empty cart' });
 	}
 };
 
 const addNewCart = async (req, res) => {
 	try {
-		const product = await Product.findById(req.body.id);
+		const product = await Product.findById(req.body.productId);
 		if (!product) {
-			res.status(400).json({ status: 'error', msg: 'product not found!' });
+			return res
+				.status(400)
+				.json({ status: 'error', msg: 'product not found!' });
 		}
 
-		let cart = req.session.cart; //creating a variable for the cart for a particular session
+		const cart = await CartModel.findById(req.body.cartId);
 
-		//if no active session for cart; to create empty cart array
 		if (!cart) {
-			cart = {
-				items: [],
-				totalAmount: 0,
-			};
+			return res.status(400).json({ status: 'error', msg: 'cart not found!' });
 		}
+
 		//managing quanities for cart
 
-		//finding the index in the cart if the item that is added matches
+		//checking if item added to cart already exists in cart
 		const findIndex = cart.items.findIndex(
-			(item) => item.product.toString() === req.body.id // item.products is essentially the objectID of a product
+			(item) => item.product.toString() === req.body.productId // item.product is essentially the objectID of a product
 		);
 
 		// if the product is in the cart, update its quantity
@@ -41,21 +59,22 @@ const addNewCart = async (req, res) => {
 			//or else just add it into cart as a new item
 		} else {
 			const cartItem = {
-				product: req.body.id,
+				product: req.body.productId,
 				price: product.price,
 				quantity: req.body.quantity || 1,
 			};
 			cart.items.push(cartItem);
 			cart.totalAmount += cartItem.price * cartItem.quantity;
 		}
-		req.session.save();
+		await cart.save();
+
 		res.status(200).json({
 			status: 'ok',
 			msg: 'item added to cart!',
-			cart: req.session.cart,
+			cart: cart,
 		});
 	} catch (error) {
-		console.log(error.message);
+		console.log(error);
 		res
 			.status(500)
 			.json({ status: 'error', msg: 'unable to add item to cart' });
@@ -64,12 +83,12 @@ const addNewCart = async (req, res) => {
 
 const deleteItemFromCart = async (req, res) => {
 	try {
-		let cart = req.session.cart;
+		const cartId = req.body.cardId;
+		const productId = req.body.productId;
+		const cart = await CartModel.findById(cartId);
 		if (!cart) {
 			return res.status(400).json({ status: 'error', msg: 'no cart found!' });
 		}
-
-		const productId = req.params.id;
 
 		// find if item already exist in cart
 		const findIndex = cart.items.findIndex(
@@ -89,13 +108,12 @@ const deleteItemFromCart = async (req, res) => {
 		// Remove the product from the cart
 		cart.items.splice(findIndex, 1);
 
-		req.session.cart = cart;
-		req.session.save(); //saving session
+		await cart.save();
 
 		res.status(200).json({
 			status: 'ok',
 			msg: 'item removed from cart!',
-			cart: req.session.cart,
+			cart: cart,
 		});
 	} catch (error) {
 		console.log(error.message);
@@ -107,10 +125,12 @@ const deleteItemFromCart = async (req, res) => {
 
 const updateCartItem = async (req, res) => {
 	try {
-		const productId = req.body.id;
+		const productId = req.body.productId;
 		const newQuantity = req.body.quantity;
+		const cartId = req.body.cartId;
 
-		let cart = req.session.cart;
+		const cart = await CartModel.findById(cartId);
+
 		if (!cart) {
 			return res.status(404).json({ status: 'error', msg: 'no cart found!' });
 		}
@@ -134,13 +154,12 @@ const updateCartItem = async (req, res) => {
 
 		cart.totalAmount += cart.items[findIndex].price * newQuantity;
 
-		req.session.cart = cart;
-		req.session.save();
+		await cart.save();
 
 		res.status(200).json({
 			status: 'ok',
 			msg: 'cart item updated!',
-			cart: req.session.cart,
+			cart: cart,
 		});
 	} catch (error) {
 		console.log(error.message);
@@ -153,5 +172,5 @@ module.exports = {
 	addNewCart,
 	deleteItemFromCart,
 	updateCartItem,
-	addNewCart,
+	createEmptyCart,
 };
