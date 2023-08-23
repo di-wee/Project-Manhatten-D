@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import WomenTops from './WomenTops';
 import ShoppingContext from '../context/ShoppingContext';
 
-function App() {
+function Main() {
 	const shoppingCtx = useContext(ShoppingContext);
 	const { cartId } = shoppingCtx;
 	return (
@@ -38,12 +38,15 @@ function App() {
 				to='/women/tops'
 				style={{ position: 'absolute', bottom: 20, left: 20 }}>
 				<Button
-					onClick={() => console.log(cartId)}
 					variant='contained'
-					color='primary'
 					style={{
+						backgroundColor: 'white', // Background color is set to white
+						color: 'black', // Text color is set to black
 						textDecoration: 'none',
-						'&:hover': { textDecoration: 'underline' },
+						'&:hover': {
+							textDecoration: 'underline',
+							backgroundColor: 'rgba(0, 0, 0, 0.1)', // Slightly darkened white for hover state
+						},
 					}}>
 					Browse
 				</Button>
@@ -63,4 +66,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Main;

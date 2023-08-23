@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
+
 import {
 	Button,
 	TextField,
@@ -16,6 +18,7 @@ function CheckoutForm() {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [address, setAddress] = useState([]);
+	const navigate = useNavigate();
 
 	// const [formData, setFormData] = useState({
 	// 	fullName: '',
@@ -100,8 +103,7 @@ function CheckoutForm() {
 		}
 	};
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
+	const handleSubmit = async () => {
 		setLoading(true);
 		const receivedClientSecret = await createPaymentIntent(
 			'64e4bb81b63cbb3c95ca9c34'
@@ -144,6 +146,7 @@ function CheckoutForm() {
 				setLoading(false);
 			} else {
 				alert('Payment successful!');
+				navigate('/shopping-cart/checkout/payment');
 			}
 		}
 	};
@@ -193,7 +196,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address Line 1'
+								label='Address'
 								name='addressline1'
 								inputRef={addressLine1Ref}
 								// onChange={handleInputChange}
@@ -203,7 +206,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address Line 2'
+								label='Address'
 								name='addressline2'
 								inputRef={addressLine2Ref}
 								// onChange={handleInputChange}
@@ -233,8 +236,8 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Country'
-								name='country'
+								label='Address'
+								name='address'
 								inputRef={countryRef}
 								// onChange={handleInputChange}
 							/>
@@ -265,7 +268,9 @@ function CheckoutForm() {
 				) : (
 					<>
 						<Typography variant='h6'>Payment Information</Typography>
-						<Box mb={2}>
+						<Box
+							mb={4}
+							mt={4}>
 							<CardElement
 								options={{
 									style: {
