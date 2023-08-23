@@ -233,7 +233,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
+								label='Address Line 1'
 								name='addressline1'
 								inputRef={addressLine1Ref}
 							/>
@@ -242,7 +242,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
+								label='Address Line 2'
 								name='addressline2'
 								inputRef={addressLine2Ref}
 							/>
@@ -269,8 +269,8 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
-								name='address'
+								label='Country'
+								name='country'
 								inputRef={countryRef}
 							/>
 						</Box>
@@ -319,6 +319,7 @@ function CheckoutForm() {
 					</>
 				)}
 				<Button
+					sx={{ marginBottom: '2rem' }}
 					onClick={() => {
 						if (activeStep === 0) {
 							if (validateFields()) {
