@@ -22,7 +22,7 @@ import Checkout from './components/CheckoutPages/Checkout';
 import Payment from './components/CheckoutPages/Payment';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-
+import LandingPage from './pages/LandingPage'
 const theme = createTheme({
 	palette: {
 		primary: {
@@ -81,6 +81,7 @@ function App() {
 
 	return (
 		<>
+		{/* <LandingPage></LandingPage> */}
 			<Elements stripe={stripePromise}>
 				<ThemeProvider theme={theme}>
 					<ShoppingContext.Provider

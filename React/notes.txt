@@ -1,1 +1,10 @@
 npm i react-router
+
+75A8663A485E3CF92CDBF0A1EFCC9DD1B46A pass for smtp.js 
+
+
+
+Server
+smtp.elasticemail.com  
+Port
+2525

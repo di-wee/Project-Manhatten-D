@@ -20,7 +20,7 @@ function App() {
 					padding: 0,
 				}}>
 				<img
-					src='/mainpic.png'
+					src='/mainpicccc.png'
 					alt='Your Brand Name'
 					style={{
 						width: '100vw',
