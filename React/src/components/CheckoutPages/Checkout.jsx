@@ -330,7 +330,6 @@ function CheckoutForm() {
 						} else {
 							handleSubmit(cartId);
 						}
-						console.log(fullNameRef.current.value);
 					}}
 					type={activeStep === 0 ? 'button' : 'submit'}
 					variant='contained'
