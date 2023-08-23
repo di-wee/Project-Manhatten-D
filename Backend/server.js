@@ -15,14 +15,14 @@ const cors = require('cors');
 const app = express();
 const userRoutes = require('./src/routers/userRoutes');
 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api", payment);
-app.use("/api", cart);
-app.use("/api", productRoutes);
-app.use("/api", address, userDetails);
+app.use('/api', payment);
+app.use('/api', cart);
+app.use('/api', productRoutes);
+app.use('/api', address, userDetails);
 
 const PORT = process.env.PORT || 1945;
 app.listen(PORT, () => {
