@@ -6,10 +6,10 @@ import ShoppingContext from '../../context/ShoppingContext';
 const ShoppingCart = (props) => {
 	const shoppingCtx = useContext(ShoppingContext);
 	const { cartItems } = shoppingCtx;
-	const cartArray = cartItems.items; //getting items array from cart
+	const cartArray = cartItems.items; //getting item array from cart
 
 	return (
-		<>
+		<div style={{ textAlign: 'center' }}>
 			<Typography
 				sx={{ fontWeight: 'bold', color: 'grey', textAlign: 'center' }}>
 				Your Swag
@@ -17,11 +17,16 @@ const ShoppingCart = (props) => {
 			<>
 				{cartArray.map((item, index) => (
 					<>
+						<img
+							src={item.product.image[0]}
+							alt={item.name}
+							width={'160px'}
+						/>
 						<Typography sx={{ color: 'grey', textAlign: 'center' }}>
 							{item.product.name}
 						</Typography>
 						<Typography sx={{ color: 'grey', textAlign: 'center' }}>
-							${item.price}
+							${item.product.price}
 						</Typography>
 						<Button onClick={() => removeFromCart(index)}>
 							Remove From Cart
@@ -51,7 +56,7 @@ const ShoppingCart = (props) => {
 				onClick={() => console.log(cartItems)}>
 				Click Me
 			</Button>
-		</>
+		</div>
 	);
 };
 
