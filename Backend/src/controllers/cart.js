@@ -1,10 +1,11 @@
 const CartModel = require('../models/Cart');
 const Product = require('../models/Products');
-const mongoose = require('mongoose');
 
 const getCart = async (req, res) => {
 	try {
-		const cart = await CartModel.findById(req.params.id);
+		const cart = await CartModel.findById(req.params.id).populate(
+			'items.product'
+		);
 
 		if (!cart) {
 			res.status(400).json({ status: 'error', msg: 'no cart found' });
