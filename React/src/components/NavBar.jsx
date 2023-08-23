@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
 	AppBar,
 	Box,
@@ -6,15 +6,20 @@ import {
 	Typography,
 	Button,
 	Breadcrumbs,
+	Badge,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from '@mui/icons-material';
+import ShoppingContext from '../context/ShoppingContext';
 
 const NavBar = () => {
 	//managing states
 	const [menCategory, setMenCategory] = useState(false);
 	const [womenCategory, setWomenCategory] = useState(false);
 	const [showMenu, setShowMenu] = useState(false);
+	const shoppingCtx = useContext(ShoppingContext);
+	const { cartItems } = shoppingCtx;
+	const cartArray = cartItems.items;
 
 	const handleMenClick = () => {
 		setMenCategory(true);
@@ -63,7 +68,13 @@ const NavBar = () => {
 					</Typography>
 					<Button
 						color='inherit'
-						endIcon={<ShoppingCart></ShoppingCart>}>
+						endIcon={
+							<Badge
+								badgeContent={cartArray ? cartArray.length : 0}
+								color='error'>
+								<ShoppingCart></ShoppingCart>
+							</Badge>
+						}>
 						<Typography
 							variant='h8'
 							component='div'>

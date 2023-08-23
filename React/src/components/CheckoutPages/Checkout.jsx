@@ -193,7 +193,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
+								label='Address Line 1'
 								name='addressline1'
 								inputRef={addressLine1Ref}
 								// onChange={handleInputChange}
@@ -203,7 +203,7 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
+								label='Address Line 2'
 								name='addressline2'
 								inputRef={addressLine2Ref}
 								// onChange={handleInputChange}
@@ -233,8 +233,8 @@ function CheckoutForm() {
 							<TextField
 								fullWidth
 								required
-								label='Address'
-								name='address'
+								label='Country'
+								name='country'
 								inputRef={countryRef}
 								// onChange={handleInputChange}
 							/>
