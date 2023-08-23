@@ -12,7 +12,7 @@ const productSchema = new Schema({
 		enum: ['Bottoms', 'Shoes', 'Bags', 'Tops', 'Accessories'],
 		required: true,
 	},
-	stock: { type: Number, default: 0 },
+	stock: { type: Number, default: 5 },
 });
 
 const Product = mongoose.model('Product', productSchema);

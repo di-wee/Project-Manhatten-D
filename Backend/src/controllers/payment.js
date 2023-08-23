@@ -3,6 +3,7 @@ const stripe = require('stripe')(process.env.TEST_KEY);
 //this is solely for stripe API
 
 const Cart = require('../models/Cart');
+const Product = require('../models/Products');
 
 const getPaymentStripe = async (req, res) => {
 	try {
@@ -24,6 +25,19 @@ const createNewPayment = async (req, res) => {
 
 		if (!cart || cart.items.length === 0) {
 			return res.status(400).json({ error: 'cart is empty' });
+		}
+
+		// to reserve the items in the cart by decrementing their stock
+		for (let cartItem of cart.items) {
+			const product = await Product.findById(cartItem.product);
+			if (!product) {
+				throw new Error(`Product with ID ${cartItem.product} not found`);
+			}
+			if (product.stock < cartItem.quantity) {
+				throw new Error(`Not enough stock for product ${product.name}`);
+			}
+			product.stock -= cartItem.quantity; //decrementing stock
+			await product.save();
 		}
 
 		// creating the paymentintent
