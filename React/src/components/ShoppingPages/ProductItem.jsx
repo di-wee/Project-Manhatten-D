@@ -35,7 +35,7 @@ const ProductItem = (props) => {
 		});
 
 		if (res.ok) {
-			getItems();
+			getItems(cartId);
 		} else {
 			console.log('error adding items to cart');
 		}
@@ -47,7 +47,7 @@ const ProductItem = (props) => {
 	};
 
 	useEffect(() => {
-		getItems();
+		getItems(cartId);
 	}, []);
 
 	return (
