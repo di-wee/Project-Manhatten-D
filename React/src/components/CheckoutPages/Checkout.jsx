@@ -23,14 +23,6 @@ function CheckoutForm() {
 	const shoppingCtx = useContext(ShoppingContext);
 	const { cartId } = shoppingCtx;
 
-	const [formData, setFormData] = useState({
-		fullName: '',
-		address: '',
-		city: '',
-		state: '',
-		zip: '',
-	});
-
 	const fullNameRef = useRef();
 	const addressLine1Ref = useRef();
 	const addressLine2Ref = useRef();
@@ -85,6 +77,24 @@ function CheckoutForm() {
 		}
 	};
 
+	const validateFields = () => {
+		const requiredFields = [
+			fullNameRef.current.value,
+			addressLine1Ref.current.value,
+			cityRef.current.value,
+			stateRef.current.value,
+			countryRef.current.value,
+			postalCodeRef.current.value,
+			emailAddressRef.current.value,
+		];
+
+		for (let field of requiredFields) {
+			if (field === '') {
+				return false;
+			}
+		}
+		return true;
+	};
 	const createPaymentIntent = async (cartId) => {
 		try {
 			const response = await fetch(
@@ -122,12 +132,12 @@ function CheckoutForm() {
 			type: 'card',
 			card: elements.getElement(CardElement),
 			billing_details: {
-				name: formData.fullName,
+				name: fullNameRef.current.value,
 				address: {
-					city: formData.city,
-					line1: formData.address,
-					state: formData.state,
-					postal_code: formData.zip,
+					city: cityRef.current.value,
+					line1: addressLine1Ref.current.value,
+					state: stateRef.current.value,
+					postal_code: postalCodeRef.current.value,
 				},
 			},
 		});
@@ -158,11 +168,6 @@ function CheckoutForm() {
 		event.preventDefault();
 	};
 
-	//   const handleInputChange = (event) => {
-	//     const { name, value } = event.target;
-	//     setFormData((prevState) => ({ ...prevState, [name]: value }));
-	//   };
-
 	useEffect(() => {
 		getAddress();
 	}, []);
@@ -192,7 +197,6 @@ function CheckoutForm() {
 								label='Full Name'
 								name='fullName'
 								inputRef={fullNameRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -202,7 +206,6 @@ function CheckoutForm() {
 								label='Address'
 								name='addressline1'
 								inputRef={addressLine1Ref}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -212,7 +215,6 @@ function CheckoutForm() {
 								label='Address'
 								name='addressline2'
 								inputRef={addressLine2Ref}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -222,7 +224,6 @@ function CheckoutForm() {
 								label='City'
 								name='city'
 								inputRef={cityRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -232,7 +233,6 @@ function CheckoutForm() {
 								label='State'
 								name='state'
 								inputRef={stateRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -242,7 +242,6 @@ function CheckoutForm() {
 								label='Address'
 								name='address'
 								inputRef={countryRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -251,9 +250,7 @@ function CheckoutForm() {
 								required
 								label='Postal Code'
 								name='postalcode'
-								// value={formData.zip}
 								inputRef={postalCodeRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -262,9 +259,7 @@ function CheckoutForm() {
 								required
 								label='Email Address'
 								name='emailaddress'
-								// value={formData.zip}
 								inputRef={emailAddressRef}
-								// onChange={handleInputChange}
 							/>
 						</Box>
 					</>
@@ -294,14 +289,16 @@ function CheckoutForm() {
 					</>
 				)}
 				<Button
-					//   onClick={() => (activeStep === 0 ? setActiveStep(1) : handleSubmit())}
 					onClick={() => {
 						if (activeStep === 0) {
-							setActiveStep(1);
-							addAddress();
-							console.log('next button clicked');
+							if (validateFields()) {
+								setActiveStep(1);
+								addAddress();
+							} else {
+								alert('Please fill in all required fields before proceeding.');
+							}
 						} else {
-							handleSubmit(cartId);
+							handleSubmit();
 						}
 					}}
 					type={activeStep === 0 ? 'button' : 'submit'}
