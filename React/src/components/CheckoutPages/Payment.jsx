@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import ShoppingContext from '../../context/ShoppingContext';
 import {
 	Container,
@@ -10,19 +10,21 @@ import {
 	TableCell,
 	TableBody,
 	Divider,
+	Button,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Payment = () => {
 	const shoppingCtx = useContext(ShoppingContext);
-	const { cartItems, clearCart } = shoppingCtx;
-	const cartArray = cartItems.items;
+	const { copyCart } = shoppingCtx;
+	const cartArray = copyCart.items;
 
 	// Calculate the total price based on the cart items.
-	console.log(shoppingCtx, cartItems);
-	const totalPrice = cartArray.reduce(
-		(acc, item) => acc + item.product.price * item.quantity,
-		0
-	);
+	console.log(shoppingCtx, copyCart);
+	// const totalPrice = cartArray.reduce(
+	// 	(acc, item) => acc + item.product.price * item.quantity,
+	// 	0
+	// );
 
 	return (
 		<Container>
@@ -73,7 +75,7 @@ const Payment = () => {
 					variant='h6'
 					align='right'
 					style={{ marginTop: '1rem' }}>
-					Total Price: ${totalPrice}
+					Total Price: ${copyCart.totalAmount}
 				</Typography>
 
 				<Typography
@@ -82,6 +84,28 @@ const Payment = () => {
 					style={{ marginTop: '2rem' }}>
 					Your order has been confirmed!
 				</Typography>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						marginTop: '2rem',
+					}}>
+					<Link to='/women/tops'>
+						<Button
+							variant='contained'
+							style={{
+								backgroundColor: 'white',
+								color: 'black',
+								textDecoration: 'none',
+								'&:hover': {
+									textDecoration: 'underline',
+									backgroundColor: 'rgba(0, 0, 0, 0.5)',
+								},
+							}}>
+							Continue Shopping...
+						</Button>
+					</Link>
+				</div>
 			</Paper>
 		</Container>
 	);

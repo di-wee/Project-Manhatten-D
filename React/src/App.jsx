@@ -43,9 +43,10 @@ function App() {
 	const [product, setProduct] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [cartItems, setCartItems] = useState([]); //from api
+	const [copyCart, setCopyCart] = useState([]);
 	const [cartId, setCartId] = useState('');
 
-	const clearCart = () => {
+	const clearCartArray = () => {
 		setCartItems([]);
 	};
 
@@ -84,6 +85,7 @@ function App() {
 
 			const data = await res.json();
 			setCartItems(data);
+			setCopyCart(data);
 		} catch (error) {
 			throw error; // propagate the error up so it can be caught in `initializeCart`
 		}
@@ -118,7 +120,9 @@ function App() {
 							getItems,
 							cartId,
 							setCartId,
-							clearCart,
+							copyCart,
+							setCopyCart,
+							clearCartArray,
 						}}>
 						<header>
 							<NavBar></NavBar>
