@@ -11,15 +11,15 @@ import ProductModal from './ProductModal';
 import ShoppingContext from '../../context/ShoppingContext';
 
 const ProductItem = (props) => {
-	const { id, image, name, description, price, category, subcategory } = props;
+	const { id, image, name, description, price, category, subcategory, stock } =
+		props;
 	const [showModal, setShowModal] = useState(false);
-	const [stock, setStock] = useState(5);
 
 	const cartCtx = useContext(ShoppingContext);
 	const { setShoppingCart, cartItems, cartId, getItems } = cartCtx;
 
 	//PUT (store items in shopping cart in database)
-	const addItems = async (productid) => {
+	const addItems = async (productid, quantity) => {
 		const res = await fetch(import.meta.env.VITE_SERVER + '/api2/cart/', {
 			method: 'PUT',
 
@@ -30,7 +30,7 @@ const ProductItem = (props) => {
 				productId: productid,
 				cartId: cartId,
 				price: price,
-				quantity: 1,
+				quantity: quantity,
 			}),
 		});
 
@@ -41,15 +41,8 @@ const ProductItem = (props) => {
 		}
 	};
 
-	const handleCart = (productid) => {
-		const addedItem = {
-			id: id,
-			name: name,
-			price: price,
-		};
-
-		setShoppingCart((prevCart) => [...prevCart, addedItem]); //state for item details
-		addItems(productid);
+	const handleCart = (productid, quantity) => {
+		addItems(productid, quantity);
 		console.log(cartItems.items);
 	};
 
@@ -128,9 +121,9 @@ const ProductItem = (props) => {
 					subcategory={subcategory}
 					showModal={showModal}
 					setShowModal={setShowModal}
+					handleCart={handleCart}
 					stock={stock}
-					setStock={setStock}
-					handleCart={handleCart}></ProductModal>
+					id={id}></ProductModal>
 			)}
 		</>
 	);

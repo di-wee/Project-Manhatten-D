@@ -25,10 +25,13 @@ const ProductModal = (props) => {
 		setShowModal,
 		stock,
 		handleCart,
+		id,
 	} = props;
-	const [value, setValue] = useState(0);
+	const [value, setValue] = useState(1);
 	const images = [image1, image2, image3, image4].filter(Boolean); // filter for any images that is undefined
-	const handleChange = (event) => {};
+	const handleChange = (event) => {
+		setValue(event.target.value);
+	};
 	return (
 		<>
 			<Dialog
@@ -79,6 +82,7 @@ const ProductModal = (props) => {
 								/>
 							))}
 						</div>
+
 						<br />
 						<p>
 							<strong>Description:</strong> {description}
@@ -92,20 +96,22 @@ const ProductModal = (props) => {
 						<p>
 							<strong>Subcategory:</strong> {subcategory}
 						</p>
+
 						<Box>
 							<Typography>Quantity:</Typography>
 							<TextField
+								onChange={handleChange}
 								value={value}
 								variant='outlined'
 								type='number'
 								inputProps={{ min: '0' }}
 								style={{ margin: '0 10px' }}></TextField>
 						</Box>
-
+						<Typography>Stock: {stock}</Typography>
 						{stock > 0 ? (
 							<Button
 								onClick={() => {
-									handleCart();
+									handleCart(id, value);
 									setShowModal(false);
 								}}
 								style={{ width: '150px' }}

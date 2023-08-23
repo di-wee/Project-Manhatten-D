@@ -62,7 +62,8 @@ const Product = (props) => {
 								price={item.price}
 								image={item.image}
 								category={item.category}
-								subcategory={item.subcategory}></ProductItem>
+								subcategory={item.subcategory}
+								stock={item.stock}></ProductItem>
 						</Grid>
 					);
 				})}
