@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,20 +13,23 @@ import {
 	Step,
 	StepLabel,
 } from '@mui/material';
+import ShoppingContext from '../../context/ShoppingContext';
 
 function CheckoutForm() {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [address, setAddress] = useState([]);
 	const navigate = useNavigate();
+	const shoppingCtx = useContext(ShoppingContext);
+	const { cartId } = shoppingCtx;
 
-	// const [formData, setFormData] = useState({
-	// 	fullName: '',
-	// 	address: '',
-	// 	city: '',
-	// 	state: '',
-	// 	zip: '',
-	// });
+	const [formData, setFormData] = useState({
+		fullName: '',
+		address: '',
+		city: '',
+		state: '',
+		zip: '',
+	});
 
 	const fullNameRef = useRef();
 	const addressLine1Ref = useRef();
@@ -103,17 +106,17 @@ function CheckoutForm() {
 		}
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (cartId) => {
 		setLoading(true);
-		const receivedClientSecret = await createPaymentIntent(
-			'64e4bb81b63cbb3c95ca9c34'
-		);
+		const receivedClientSecret = await createPaymentIntent(cartId);
 
 		if (!receivedClientSecret) {
 			console.log('error saving clientSecret for backend');
 			setLoading(false);
 			return;
 		}
+
+		const clientSecret = receivedClientSecret;
 
 		const { error, paymentMethod } = await stripe.createPaymentMethod({
 			type: 'card',
@@ -298,7 +301,7 @@ function CheckoutForm() {
 							addAddress();
 							console.log('next button clicked');
 						} else {
-							handleSubmit();
+							handleSubmit(cartId);
 						}
 					}}
 					type={activeStep === 0 ? 'button' : 'submit'}
