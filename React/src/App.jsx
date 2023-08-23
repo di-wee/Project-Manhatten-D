@@ -42,7 +42,7 @@ function App() {
 	// const [shoes, setShoes] = useState([]);
 	const [product, setProduct] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
-	const [cartItems, setCartItems] = useState([]);
+	const [cartItems, setCartItems] = useState([]); //from api
 	const [cartId, setCartId] = useState('');
 
 	const createEmptyCart = async () => {
@@ -52,9 +52,13 @@ function App() {
 			});
 
 			const data = await res.json();
-			setCartId(data);
+			const cartid = await data.cartId;
+			setCartId(cartid);
 			if (!res.ok) {
 				console.log('error creating cart');
+			} else {
+				// now that we have the cartId, we can fetch its items.
+				await getItems();
 			}
 		} catch (error) {
 			console.log('internal error: error creating cart');
@@ -62,21 +66,36 @@ function App() {
 	};
 
 	const getItems = async () => {
-		const res = await fetch(
-			import.meta.env.VITE_SERVER + '/api/cart/64e4bb81b63cbb3c95ca9c34'
-		);
+		try {
+			const res = await fetch(
+				import.meta.env.VITE_SERVER + `/api/cart/${cartId}`
+			);
 
-		if (!res.ok) {
-			throw new Error('issue in network response');
+			if (!res.ok) {
+				const errorData = await res.json();
+				throw new Error(
+					`Issue in network response: ${errorData.message || 'Unknown error'}`
+				);
+			}
+
+			const data = await res.json();
+			setCartItems(data);
+		} catch (error) {
+			throw error; // propagate the error up so it can be caught in `initializeCart`
 		}
-		const data = await res.json();
-		setCartItems(data);
 	};
 
 	useEffect(() => {
-		createEmptyCart;
-		getItems();
-		console.log(cartItems);
+		const initializeCart = async () => {
+			try {
+				await createEmptyCart();
+				console.log(cartItems);
+			} catch (error) {
+				console.error('Failed to initialize cart:', error);
+			}
+		};
+
+		initializeCart();
 	}, []);
 
 	return (

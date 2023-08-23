@@ -8,11 +8,11 @@ const getCart = async (req, res) => {
 		); // populate product info like name/descript
 
 		if (!cart) {
-			res.status(400).json({ status: 'error', msg: 'no cart found' });
+			return res.status(400).json({ status: 'error', msg: 'no cart found' });
 		}
 		res.status(200).json(cart);
 	} catch (error) {
-		console.log(error.message);
+		console.error('Error in controller:', error);
 	}
 };
 
