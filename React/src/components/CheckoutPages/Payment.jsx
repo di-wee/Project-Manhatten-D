@@ -14,7 +14,7 @@ import {
 
 const Payment = () => {
 	const shoppingCtx = useContext(ShoppingContext);
-	const { cartItems } = shoppingCtx;
+	const { cartItems, clearCart } = shoppingCtx;
 	const cartArray = cartItems.items;
 
 	// Calculate the total price based on the cart items.
