@@ -43,6 +43,23 @@ function App() {
 	const [product, setProduct] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
+	const [cartId, setCartId] = useState('');
+
+	const createEmptyCart = async () => {
+		try {
+			const res = await fetch(import.meta.env.VITE_SERVER + '/api/cart', {
+				method: 'POST',
+			});
+
+			const data = await res.json();
+			setCartId(data);
+			if (!res.ok) {
+				console.log('error creating cart');
+			}
+		} catch (error) {
+			console.log('internal error: error creating cart');
+		}
+	};
 
 	const getItems = async () => {
 		const res = await fetch(
@@ -57,6 +74,7 @@ function App() {
 	};
 
 	useEffect(() => {
+		createEmptyCart;
 		getItems();
 		console.log(cartItems);
 	}, []);
@@ -74,6 +92,8 @@ function App() {
 							cartItems,
 							setCartItems,
 							getItems,
+							cartId,
+							setCartId,
 						}}>
 						<header>
 							<NavBar></NavBar>

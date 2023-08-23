@@ -5,7 +5,7 @@ const getCart = async (req, res) => {
 	try {
 		const cart = await CartModel.findById(req.params.id).populate(
 			'items.product'
-		);
+		); // populate product info like name/descript
 
 		if (!cart) {
 			res.status(400).json({ status: 'error', msg: 'no cart found' });
@@ -18,7 +18,7 @@ const getCart = async (req, res) => {
 
 const createEmptyCart = async (req, res) => {
 	try {
-		const newCart = new CartModel(); // create a new empty cart .
+		const newCart = new CartModel();
 		await newCart.save(); //saving it to DB
 		res.status(200).json({
 			status: 'ok',

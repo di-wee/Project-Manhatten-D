@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import WomenTops from './WomenTops';
+import ShoppingContext from '../context/ShoppingContext';
 
 function App() {
+	const shoppingCtx = useContext(ShoppingContext);
+	const { cartId } = shoppingCtx;
 	return (
 		<div style={{ position: 'relative', minHeight: '100vh' }}>
 			<Container
@@ -35,6 +38,7 @@ function App() {
 				to='/women/tops'
 				style={{ position: 'absolute', bottom: 20, left: 20 }}>
 				<Button
+					onClick={() => console.log(cartId)}
 					variant='contained'
 					color='primary'
 					style={{
