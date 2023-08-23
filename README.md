@@ -44,37 +44,41 @@ MANHATTAN D offers a diverse range of clothing inclusive of tops, bottoms, shoes
 
 ## Website Wireframe
 
-![Wireframe](Wireframe.png)
+<img width="756" alt="Wireframe" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/c8784613-5ab9-4ea7-9870-9346d3f3230e">
 
 ## Screenshots
 
 ### Landing Page
 
-![LandingPage](LandingPage.png)
+<img width="1428" alt="LandingPage" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/2180d38b-05ab-4bf9-ba38-4952c55840dc">
 
 ### Product Category Page
 
-![ProductCategoryPage](ProductCategoryPage.png)
+<img width="1430" alt="ProductCategoryPage" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/0df69e91-2e56-4f7c-86fa-c61ade52b43d">
 
 ### Product Details Modal
 
-![ProductDetailsModal](ProductDetailsModal.png)
+<img width="1429" alt="ProductDetailsModal" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/9a5c8dee-918d-432a-8c73-e425e955e7ee">
 
 ### Shopping Cart
 
-![ShoppingCart](shoppingCart.png)
+![shoppingCart](https://github.com/di-wee/Project-Manhatten-D/assets/126299115/9d14f580-e9ed-4d45-a58e-45c940993845)
 
 ### Checkout
 
-![Checkout](CheckoutPage.png)
+<img width="1431" alt="CheckoutPage" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/4a393513-b178-4421-86ac-792ba4967b33">
 
 ### Payment
 
-![Payment](Payment.jpg)
+![Payment](https://github.com/di-wee/Project-Manhatten-D/assets/126299115/9696cd5e-ca36-46e4-a017-9afb0056b1a8)
 
 ### Order Confirmation
 
-![OrderConfirmation](OrderConfirmation-1.jpg)
+![OrderConfirmation](https://github.com/di-wee/Project-Manhatten-D/assets/126299115/d4f602e3-d7f4-4e0e-b92a-4e4a4d8812ad)
+
+### FAQ
+
+<img width="1432" alt="FAQ" src="https://github.com/di-wee/Project-Manhatten-D/assets/126299115/8c8508df-34ad-4cae-9b13-be7d224aeb19">
 
 ## API Endpoints
 
