@@ -12,7 +12,7 @@ const Product = (props) => {
 
 	const getProducts = async (category, subcategory) => {
 		try {
-			let url = import.meta.env.VITE_SERVER + '/api/product';
+			let url = import.meta.env.VITE_SERVER + '/api3/product';
 
 			if (category) {
 				url += `?category=${category}`; // if category exist, will add on to query paramater

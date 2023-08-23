@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import {
 	Button,
@@ -15,22 +15,74 @@ import {
 function CheckoutForm() {
 	const stripe = useStripe();
 	const elements = useElements();
-	const [formData, setFormData] = useState({
-		fullName: '',
-		address: '',
-		city: '',
-		state: '',
-		zip: '',
-	});
+	const [address, setAddress] = useState([]);
+
+	// const [formData, setFormData] = useState({
+	// 	fullName: '',
+	// 	address: '',
+	// 	city: '',
+	// 	state: '',
+	// 	zip: '',
+	// });
+
+	const fullNameRef = useRef();
+	const addressLine1Ref = useRef();
+	const addressLine2Ref = useRef();
+	const cityRef = useRef();
+	const stateRef = useRef();
+	const countryRef = useRef();
+	const postalCodeRef = useRef();
+	const emailAddressRef = useRef();
+
 	const [clientSecret, setClientSecret] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
 	const steps = ['Shipping Details', 'Payment Information'];
 
+	//GET addresses
+	const getAddress = async () => {
+		const res = await fetch(import.meta.env.VITE_SERVER + '/api4/address');
+
+		const data = await res.json();
+		setAddress(data);
+		console.log(data);
+	};
+
+	//PUT addresses
+	const addAddress = async () => {
+		const res = await fetch(import.meta.env.VITE_SERVER + '/api4/address', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				fullName: fullNameRef.current.value,
+				addressLine1: addressLine1Ref.current.value,
+				addressLine2: addressLine2Ref.current.value,
+				city: cityRef.current.value,
+				state: stateRef.current.value,
+				country: countryRef.current.value,
+				postalCode: postalCodeRef.current.value,
+				emailAddress: emailAddressRef.current.value,
+			}),
+		});
+		if (res.status === 200) {
+			getAddress();
+			fullNameRef.current.value = '';
+			addressLine1Ref.current.value = '';
+			addressLine2Ref.current.value = '';
+			cityRef.current.value = '';
+			stateRef.current.value = '';
+			countryRef.current.value = '';
+			postalCodeRef.current.value;
+			emailAddressRef.current.value = '';
+		}
+	};
+
 	const createPaymentIntent = async (cartId) => {
 		try {
 			const response = await fetch(
-				`${import.meta.env.VITE_SERVER}/api/payment/intent/${cartId}`,
+				`${import.meta.env.VITE_SERVER}/api1/payment/intent/${cartId}`,
 				{
 					method: 'POST',
 					headers: {
@@ -51,7 +103,6 @@ function CheckoutForm() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setLoading(true);
-
 		const receivedClientSecret = await createPaymentIntent(
 			'64e4bb81b63cbb3c95ca9c34'
 		);
@@ -97,10 +148,18 @@ function CheckoutForm() {
 		}
 	};
 
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setFormData((prevState) => ({ ...prevState, [name]: value }));
+	const handleDefault = (event) => {
+		event.preventDefault();
 	};
+
+	//   const handleInputChange = (event) => {
+	//     const { name, value } = event.target;
+	//     setFormData((prevState) => ({ ...prevState, [name]: value }));
+	//   };
+
+	useEffect(() => {
+		getAddress();
+	}, []);
 
 	return (
 		<Container>
@@ -116,7 +175,7 @@ function CheckoutForm() {
 					</Step>
 				))}
 			</Stepper>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleDefault}>
 				{activeStep === 0 ? (
 					<>
 						<Typography variant='h6'>Shipping Details</Typography>
@@ -126,8 +185,8 @@ function CheckoutForm() {
 								required
 								label='Full Name'
 								name='fullName'
-								value={formData.fullName}
-								onChange={handleInputChange}
+								inputRef={fullNameRef}
+								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -135,9 +194,19 @@ function CheckoutForm() {
 								fullWidth
 								required
 								label='Address'
-								name='address'
-								value={formData.address}
-								onChange={handleInputChange}
+								name='addressline1'
+								inputRef={addressLine1Ref}
+								// onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='Address'
+								name='addressline2'
+								inputRef={addressLine2Ref}
+								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -146,8 +215,8 @@ function CheckoutForm() {
 								required
 								label='City'
 								name='city'
-								value={formData.city}
-								onChange={handleInputChange}
+								inputRef={cityRef}
+								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
@@ -156,18 +225,40 @@ function CheckoutForm() {
 								required
 								label='State'
 								name='state'
-								value={formData.state}
-								onChange={handleInputChange}
+								inputRef={stateRef}
+								// onChange={handleInputChange}
 							/>
 						</Box>
 						<Box mb={2}>
 							<TextField
 								fullWidth
 								required
-								label='ZIP Code'
-								name='zip'
-								value={formData.zip}
-								onChange={handleInputChange}
+								label='Address'
+								name='address'
+								inputRef={countryRef}
+								// onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='Postal Code'
+								name='postalcode'
+								// value={formData.zip}
+								inputRef={postalCodeRef}
+								// onChange={handleInputChange}
+							/>
+						</Box>
+						<Box mb={2}>
+							<TextField
+								fullWidth
+								required
+								label='Email Address'
+								name='emailaddress'
+								// value={formData.zip}
+								inputRef={emailAddressRef}
+								// onChange={handleInputChange}
 							/>
 						</Box>
 					</>
@@ -195,7 +286,16 @@ function CheckoutForm() {
 					</>
 				)}
 				<Button
-					onClick={() => (activeStep === 0 ? setActiveStep(1) : handleSubmit())}
+					//   onClick={() => (activeStep === 0 ? setActiveStep(1) : handleSubmit())}
+					onClick={() => {
+						if (activeStep === 0) {
+							setActiveStep(1);
+							addAddress();
+							console.log('next button clicked');
+						} else {
+							handleSubmit();
+						}
+					}}
 					type={activeStep === 0 ? 'button' : 'submit'}
 					variant='contained'
 					color='primary'

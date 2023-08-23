@@ -5,7 +5,8 @@ import ShoppingContext from '../../context/ShoppingContext';
 
 const ShoppingCart = (props) => {
 	const shoppingCtx = useContext(ShoppingContext);
-	const { shoppingCart, cartItems } = shoppingCtx;
+	const { cartItems } = shoppingCtx;
+	const cartArray = cartItems.items; //getting items array from cart
 
 	return (
 		<>
@@ -14,10 +15,10 @@ const ShoppingCart = (props) => {
 				Your Swag
 			</Typography>
 			<>
-				{shoppingCart.map((item, index) => (
+				{cartArray.map((item, index) => (
 					<>
 						<Typography sx={{ color: 'grey', textAlign: 'center' }}>
-							{item.name}
+							{item.product.name}
 						</Typography>
 						<Typography sx={{ color: 'grey', textAlign: 'center' }}>
 							${item.price}

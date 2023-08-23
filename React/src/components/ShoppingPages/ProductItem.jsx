@@ -16,12 +16,11 @@ const ProductItem = (props) => {
 	const [stock, setStock] = useState(5);
 
 	const cartCtx = useContext(ShoppingContext);
-	const { shoppingCart, setShoppingCart, cartItems, cartId, getItems } =
-		cartCtx;
+	const { setShoppingCart, cartItems, cartId, getItems } = cartCtx;
 
 	//PUT (store items in shopping cart in database)
 	const addItems = async (productid) => {
-		const res = await fetch(import.meta.env.VITE_SERVER + '/api/cart/', {
+		const res = await fetch(import.meta.env.VITE_SERVER + '/api2/cart/', {
 			method: 'PUT',
 
 			headers: {
@@ -51,7 +50,7 @@ const ProductItem = (props) => {
 
 		setShoppingCart((prevCart) => [...prevCart, addedItem]); //state for item details
 		addItems(productid);
-		console.log(cartItems);
+		console.log(cartItems.items);
 	};
 
 	useEffect(() => {

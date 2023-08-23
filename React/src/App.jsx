@@ -22,7 +22,7 @@ import Checkout from './components/CheckoutPages/Checkout';
 import Payment from './components/CheckoutPages/Payment';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import LandingPage from './pages/LandingPage'
+import LandingPage from './pages/LandingPage';
 const theme = createTheme({
 	palette: {
 		primary: {
@@ -47,12 +47,12 @@ function App() {
 
 	const createEmptyCart = async () => {
 		try {
-			const res = await fetch(import.meta.env.VITE_SERVER + '/api/cart', {
+			const res = await fetch(import.meta.env.VITE_SERVER + '/api2/cart', {
 				method: 'POST',
 			});
 
 			const data = await res.json();
-			const cartid = await data.cartId;
+			const cartid = await data.cartId; // to set the async cartid
 			setCartId(cartid);
 			if (!res.ok) {
 				console.log('error creating cart');
@@ -68,7 +68,7 @@ function App() {
 	const getItems = async () => {
 		try {
 			const res = await fetch(
-				import.meta.env.VITE_SERVER + `/api/cart/${cartId}`
+				import.meta.env.VITE_SERVER + `/api2/cart/${cartId}`
 			);
 
 			if (!res.ok) {
@@ -100,7 +100,7 @@ function App() {
 
 	return (
 		<>
-		{/* <LandingPage></LandingPage> */}
+			{/* <LandingPage></LandingPage> */}
 			<Elements stripe={stripePromise}>
 				<ThemeProvider theme={theme}>
 					<ShoppingContext.Provider
