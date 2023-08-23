@@ -84,16 +84,22 @@ const addNewCart = async (req, res) => {
 
 const deleteItemFromCart = async (req, res) => {
 	try {
-		const cartId = req.body.cardId;
+		const cartId = req.body.cartId;
 		const productId = req.body.productId;
 		const cart = await CartModel.findById(cartId);
+
 		if (!cart) {
 			return res.status(400).json({ status: 'error', msg: 'no cart found!' });
 		}
 
-		// find if item already exist in cart
+		// find if item already exists in cart
 		const findIndex = cart.items.findIndex(
 			(item) => item.product.toString() === productId
+		);
+
+		console.log(
+			'Cart product IDs:',
+			cart.items.map((item) => item.product.toString())
 		);
 
 		if (findIndex === -1) {
@@ -102,25 +108,34 @@ const deleteItemFromCart = async (req, res) => {
 				.json({ status: 'error', msg: 'Product not found in cart!' });
 		}
 
-		// update the totalAmount in cart
-		cart.totalAmount -=
-			cart.items[findIndex].price * cart.items[findIndex].quantity;
+		let updatedCart;
 
-		// Remove the product from the cart
-		cart.items.splice(findIndex, 1);
+		// If the item's quantity is more than 1, decrement it
+		if (cart.items[findIndex].quantity > 1) {
+			cart.items[findIndex].quantity -= 1;
+			cart.totalAmount -= cart.items[findIndex].price;
 
-		await cart.save();
+			updatedCart = await cart.save();
+		} else {
+			// If the item's quantity is 1, remove the product from the cart
+			updatedCart = await CartModel.findByIdAndUpdate(
+				cartId,
+				{
+					$pull: { items: { product: productId } },
+					$inc: { totalAmount: -cart.items[findIndex].price },
+				},
+				{ new: true }
+			); // The option { new: true } returns the updated document
+		}
 
 		res.status(200).json({
 			status: 'ok',
-			msg: 'item removed from cart!',
-			cart: cart,
+			msg: 'Updated cart successfully!',
+			cart: updatedCart,
 		});
 	} catch (error) {
 		console.log(error.message);
-		res
-			.status(500)
-			.json({ status: 'error', msg: 'error removing item from cart' });
+		res.status(500).json({ status: 'error', msg: 'error updating cart' });
 	}
 };
 
