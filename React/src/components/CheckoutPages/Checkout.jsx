@@ -38,11 +38,20 @@ function CheckoutForm() {
 	const steps = ['Shipping Details', 'Payment Information'];
 
 	//GET addresses
-	const getAddress = async () => {
-		const res = await fetch(import.meta.env.VITE_SERVER + '/api4/address');
+	const getAddress = async (addressId) => {
+		const res = await fetch(
+			import.meta.env.VITE_SERVER + `/api4/address/${addressId}`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		const data = await res.json();
 		setAddress(data);
+
 		console.log(data);
 	};
 
@@ -65,15 +74,9 @@ function CheckoutForm() {
 			}),
 		});
 		if (res.status === 200) {
-			getAddress();
-			fullNameRef.current.value = '';
-			addressLine1Ref.current.value = '';
-			addressLine2Ref.current.value = '';
-			cityRef.current.value = '';
-			stateRef.current.value = '';
-			countryRef.current.value = '';
-			postalCodeRef.current.value;
-			emailAddressRef.current.value = '';
+			const data = await res.json();
+			const addressId = await data.addressId;
+			getAddress(addressId);
 		}
 	};
 
@@ -118,6 +121,7 @@ function CheckoutForm() {
 
 	const handleSubmit = async (cartId) => {
 		setLoading(true);
+		console.log(cartId);
 		const receivedClientSecret = await createPaymentIntent(cartId);
 
 		if (!receivedClientSecret) {
@@ -132,12 +136,12 @@ function CheckoutForm() {
 			type: 'card',
 			card: elements.getElement(CardElement),
 			billing_details: {
-				name: fullNameRef.current.value,
+				name: address.fullName,
 				address: {
-					city: cityRef.current.value,
-					line1: addressLine1Ref.current.value,
-					state: stateRef.current.value,
-					postal_code: postalCodeRef.current.value,
+					city: address.city,
+					line1: address.addressLine1,
+					state: address.state,
+					postal_code: address.postalCode,
 				},
 			},
 		});
@@ -298,8 +302,9 @@ function CheckoutForm() {
 								alert('Please fill in all required fields before proceeding.');
 							}
 						} else {
-							handleSubmit();
+							handleSubmit(cartId);
 						}
+						console.log(fullNameRef.current.value);
 					}}
 					type={activeStep === 0 ? 'button' : 'submit'}
 					variant='contained'

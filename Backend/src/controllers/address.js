@@ -14,7 +14,7 @@ const putAddress = async (req, res) => {
 			emailAddress: req.body.emailAddress,
 		});
 		await createAddress.save();
-		res.json({ status: 'ok', msg: 'saved' });
+		res.json({ status: 'ok', msg: 'saved', addressId: createAddress._id });
 	} catch (error) {
 		console.log(error.message);
 		res.json({ status: 'error', message: error.message });
