@@ -7,6 +7,7 @@ A mock e-commerce website specialising in selling mid-high fashion clothing.
 - [About](#about)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Installation](#installation)
 - [Website Wireframe](#website-wireframe)
 - [Screenshots](#screenshots)
 - [API Endpoints](#api-endpoints)
@@ -31,16 +32,97 @@ MANHATTAN D offers a diverse range of clothing inclusive of tops, bottoms, shoes
 
 ## Tech Stack
 
-**Frontend**:
+**Front-end:** 
+React
 
-- React
-- Material-UI
+**Back-end:** 
+Node.js, Express.js
 
-**Backend**:
+**UI Components:** 
+Material UI
 
-- Node.js
-- Express.js
-- MongoDB
+**Payment:** 
+Stripe.js
+
+**Routing:**
+React Router
+
+**Database:**
+MongoDB
+
+## Installation
+
+1. Clone the Repository
+
+```
+Copy code
+git clone https://github.com/di-wee/Project-Manhatten-D.git
+cd Project-Manhatten-D
+```
+
+2. Backend Setup
+Navigate to the backend directory:
+
+```
+Copy code
+cd Backend
+```
+
+Install the required npm packages:
+```
+npm init -y
+npm i express mongoose dotenv stripe
+```
+
+3. Frontend Setup
+Navigate to the frontend directory: React
+
+```
+Copy code
+cd React
+```
+
+Install the required npm packages:
+
+```
+Copy code
+npm install react-router-dom
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+npm install stripe
+
+```
+4. Environment Variables
+Create a .env file in the root of your backend directory and fill in the required variables, for instance:
+
+```
+Copy code
+DB_CONNECTION_STRING=your_mongodb_connection_string
+STRIPE_SECRET_KEY=your_stripe_secret_key
+```
+
+Replace placeholders like your_mongodb_connection_string with the actual details.
+
+5. Starting the Application
+
+Backend:
+
+From the backend directory, run:
+
+```
+Copy code
+npm run dev
+```
+By default, the backend might run on http://localhost:5000 unless you've set it up differently.
+
+Frontend:
+
+From the frontend directory, run:
+
+```
+Copy code
+npm run dev
+```
+By default, this will start the React development server, typically on http://localhost:3000.
 
 ## Website Wireframe
 
