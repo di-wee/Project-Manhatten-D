@@ -17,6 +17,7 @@ A mock e-commerce website specialising in selling mid-high fashion clothing.
 ## About
 
 MANHATTAN D offers a diverse range of clothing inclusive of tops, bottoms, shoes, bags and accessories. Our intuitive design and secure payment systems ensure a smooth shopping experience for our users.
+Click here for the deployment link: (https://manhattan-d.onrender.com/)
 
 ## Features
 
